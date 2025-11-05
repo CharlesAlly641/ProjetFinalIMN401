@@ -19,10 +19,10 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     l_Model = glGetUniformLocation(vp->getId(), "Model");
     l_Ka = glGetUniformLocation(vp->getId(), "Ka");
     l_Kd = glGetUniformLocation(vp->getId(), "Kd");
-    l_posLum = glGetUniformLocation(vp->getId(), "posLum");
-    l_posCam = glGetUniformLocation(vp->getId(), "posCam");
     l_Ks = glGetUniformLocation(fp->getId(), "Ks");
     l_s = glGetUniformLocation(fp->getId(), "s");
+    l_posLum = glGetUniformLocation(vp->getId(), "posLum");
+    l_posCam = glGetUniformLocation(vp->getId(), "posCam");
     l_Tex = glGetUniformLocation(fp->getId(), "Tex");
     l_Tex2 = glGetUniformLocation(fp->getId(), "Tex2");
     l_NormalMap = glGetUniformLocation(fp->getId(), "NormalMap");
@@ -62,10 +62,11 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_Proj, 1, GL_FALSE, glm::value_ptr(Proj));
 
     // On transmet les paramètres du modèle de Phong au VS
-    glProgramUniform3f(vp->getId(), l_Ka, 0.1, 0.1, 0.1);
-    glProgramUniform3f(vp->getId(), l_Kd, 0.8, 0.2, 0.2);
-    glProgramUniform3f(fp->getId(), l_Ks, 1.0, 1.0, 1.0);
-    glProgramUniform1f(fp->getId(), l_s, 32.0f);
+    glProgramUniform3fv(vp->getId(), l_Ka, 1, glm::value_ptr(m_Ka));
+    glProgramUniform3fv(vp->getId(), l_Kd, 1, glm::value_ptr(m_Kd));
+    glProgramUniform3fv(fp->getId(), l_Ks, 1, glm::value_ptr(m_Ks));
+    glProgramUniform1f(fp->getId(), l_s, m_Shininess);
+
 
     // Conversion de la lumière du repère scène vers le repère objet
     Node *lumiere = Scene::getInstance()->getNode("Lumiere");
@@ -90,3 +91,18 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
         glProgramUniform1i(fp->getId(), l_NormalMap, 2);
     }
 }
+
+void TextureMaterial::setPhong(const glm::vec3 &Kd, const glm::vec3 &Ks, const glm::vec3 &Ka, float shininess) {
+    // Enregistre les paramètres localement si tu veux les réutiliser dans animate()
+    m_Kd = Kd;
+    m_Ks = Ks;
+    m_Ka = Ka;
+    m_Shininess = shininess;
+
+    // Envoie directement dans les shaders
+    glProgramUniform3fv(vp->getId(), l_Ka, 1, glm::value_ptr(m_Ka));
+    glProgramUniform3fv(vp->getId(), l_Kd, 1, glm::value_ptr(m_Kd));
+    glProgramUniform3fv(fp->getId(), l_Ks, 1, glm::value_ptr(m_Ks));
+    glProgramUniform1f(fp->getId(), l_s, m_Shininess);
+}
+
