@@ -12,7 +12,6 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     m_ProgramPipeline->useProgramStage(fp, GL_FRAGMENT_SHADER_BIT);
 
     m_Texture = nullptr;
-    m_Texture2 = nullptr;
 
     l_View = glGetUniformLocation(vp->getId(), "View");
     l_Proj = glGetUniformLocation(vp->getId(), "Proj");
@@ -24,7 +23,6 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     l_posLum = glGetUniformLocation(vp->getId(), "posLum");
     l_posCam = glGetUniformLocation(vp->getId(), "posCam");
     l_Tex = glGetUniformLocation(fp->getId(), "Tex");
-    l_Tex2 = glGetUniformLocation(fp->getId(), "Tex2");
     l_NormalMap = glGetUniformLocation(fp->getId(), "NormalMap");
 }
 
@@ -36,8 +34,7 @@ void TextureMaterial::render(Node *o) {
 
     // Liaison des textures au canaux
     if (m_Texture) { glBindTextureUnit(0, m_Texture->getId()); }
-    if (m_Texture2) { glBindTextureUnit(1, m_Texture2->getId()); }
-    if (m_NormalMap) { glBindTextureUnit(2, m_NormalMap->getId()); }
+    if (m_NormalMap) { glBindTextureUnit(1, m_NormalMap->getId()); }
 
     o->drawGeometry(GL_TRIANGLES);
     m_ProgramPipeline->release();
@@ -84,25 +81,16 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     if (m_Texture) {
         glProgramUniform1i(fp->getId(), l_Tex, 0);
     }
-    if (m_Texture2) {
-        glProgramUniform1i(fp->getId(), l_Tex2, 1);
-    }
     if (m_NormalMap) {
-        glProgramUniform1i(fp->getId(), l_NormalMap, 2);
+        glProgramUniform1i(fp->getId(), l_NormalMap, 1);
     }
 }
 
 void TextureMaterial::setPhong(const glm::vec3 &Kd, const glm::vec3 &Ks, const glm::vec3 &Ka, float shininess) {
-    // Enregistre les paramètres localement si tu veux les réutiliser dans animate()
+    // Enregistre les paramètres localement pour la fonction animate()
     m_Kd = Kd;
     m_Ks = Ks;
     m_Ka = Ka;
     m_Shininess = shininess;
-
-    // Envoie directement dans les shaders
-    glProgramUniform3fv(vp->getId(), l_Ka, 1, glm::value_ptr(m_Ka));
-    glProgramUniform3fv(vp->getId(), l_Kd, 1, glm::value_ptr(m_Kd));
-    glProgramUniform3fv(fp->getId(), l_Ks, 1, glm::value_ptr(m_Ks));
-    glProgramUniform1f(fp->getId(), l_s, m_Shininess);
 }
 

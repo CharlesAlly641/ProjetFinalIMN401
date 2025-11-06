@@ -20,7 +20,6 @@ protected:
 
     GLuint l_View, l_Proj, l_Model; // location of uniforms
     GLuint l_Ka, l_Kd, l_posLum, l_posCam, l_Ks, l_s;
-    GLuint l_posLum2, l_Time, l_posBunny; // (Examen)
     
 };
 

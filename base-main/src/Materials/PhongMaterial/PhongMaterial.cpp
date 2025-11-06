@@ -20,9 +20,6 @@ PhongMaterial::PhongMaterial(std::string name) : MaterialGL(name) {
     l_posCam = glGetUniformLocation(vp->getId(), "posCam");
     l_Ks = glGetUniformLocation(fp->getId(), "Ks");
     l_s = glGetUniformLocation(fp->getId(), "s");
-    l_posLum2 = glGetUniformLocation(vp->getId(), "posLum2"); // (Examen)
-    l_Time = glGetUniformLocation(vp->getId(), "Deformation"); // (Examen)
-    l_posBunny = glGetUniformLocation(vp->getId(), "posBunny"); // (Examen)
 }
 
 PhongMaterial::~PhongMaterial() {}
@@ -65,26 +62,10 @@ void PhongMaterial::animate(Node *o, const float elapsedTime) {
     glm::vec3 LumiereObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(LumiereScene, o->frame());
     glProgramUniform3fv(vp->getId(), l_posLum, 1, glm::value_ptr(LumiereObjet));
 
-    Node *lumiere2 = Scene::getInstance()->getNode("Lumiere2");
-    glm::vec3 LumiereScene2 = lumiere2->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
-    glm::vec3 LumiereObjet2 = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(LumiereScene2, o->frame());
-    glProgramUniform3fv(vp->getId(), l_posLum2, 1, glm::value_ptr(LumiereObjet2));
-
     // Conversion de la caméra du repère scène vers le repère objet
     Camera *camera = Scene::getInstance()->camera();
     glm::vec3 CameraScene = camera->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
     glm::vec3 CameraObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(CameraScene, o->frame());
     glProgramUniform3fv(vp->getId(), l_posCam, 1, glm::value_ptr(CameraObjet));
 
-    // On trouve les coordonnées du noeud Bunny (Examen)
-    Node* bunny = Scene::getInstance()->getNode("Bunny");
-    glm::vec3 BunnyScene = bunny->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
-    glm::vec3 BunnyObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(BunnyScene, o->frame());
-    glProgramUniform3fv(vp->getId(), l_posBunny, 1, glm::value_ptr(BunnyObjet));
-
-    // On transmet le temps au vertex shader (Examen)
-    float deformation = 0.75 * sin(elapsedTime * 1.0);
-    if (o->getName() == "Sol") {
-        glProgramUniform1f(vp->getId(), l_Time, deformation);
-    }
 }

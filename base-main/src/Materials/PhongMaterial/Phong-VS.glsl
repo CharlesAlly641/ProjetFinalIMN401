@@ -7,9 +7,6 @@ uniform vec3 Ka;
 uniform vec3 Kd;
 uniform vec3 posLum;
 uniform vec3 posCam;
-uniform vec3 posLum2;
-uniform float Deformation;
-uniform vec3 posBunny;
 
 out vec3 vKa;
 out vec3 vKd;
@@ -31,19 +28,10 @@ void main() {
 
     // Calcul des paramètres de Phong transmis au FS
     LightDir = posLum - Position;
-    LightDir2 = posLum2 - Position;
     Norm = normalize(Normal);
     ViewDir = posCam - Position;
     vKa = Ka;
     vKd = Kd;
-
-    // Déformation du sol seulement (Examen)
-    float distance = length(posBunny.xz - Position.xz);
-    vec3 newPos = Position;
-    if (distance > 2.0) {
-        newPos = Position + Deformation * Normal;
-    }
-
 
     gl_Position = Proj * View * Model * vec4(newPos, 1.0);
 

@@ -17,28 +17,28 @@ public:
 
     virtual void setDiffuseTexture(Texture2D *tex) { m_Texture = tex; }
 
-    virtual void setTexture2(Texture2D *tex) { m_Texture2 = tex; }
-
     virtual void setNormalMap(Texture2D *tex) { m_NormalMap = tex;  }
 
     virtual void setPhong(const glm::vec3 &Kd, const glm::vec3 &Ks, const glm::vec3 &Ka, float shininess);
 
 
 protected:
+    // Variables de textures
     Texture2D *m_Texture;
-    Texture2D* m_Texture2;
     Texture2D *m_NormalMap;
+
+    // Variables de Phong
+    glm::vec3 m_Ka;
+    glm::vec3 m_Kd;
+    glm::vec3 m_Ks;
+    float m_Shininess;
 
     GLProgram *vp;
     GLProgram *fp;
 
-    GLuint l_View, l_Proj, l_Model; // location of uniforms
+    // Localisation des variables uniformes
+    GLuint l_View, l_Proj, l_Model; 
     GLuint l_Ka, l_Kd, l_posLum, l_posCam, l_Ks, l_s;
     GLuint l_Tex, l_Tex2, l_NormalMap;
-    
-    glm::vec3 m_Ka = glm::vec3(0.1f);
-    glm::vec3 m_Kd = glm::vec3(0.8f);
-    glm::vec3 m_Ks = glm::vec3(1.0f);
-    float m_Shininess = 32.0f;
 };
 
