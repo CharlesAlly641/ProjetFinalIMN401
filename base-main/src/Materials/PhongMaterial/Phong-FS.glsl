@@ -14,7 +14,7 @@ layout(location = 0) out vec4 Color;
 
 void main() {
 
-    // Calcul des paramètres de Phong avec posLum1
+    // Calcul des paramètres de Phong avec posLum
     vec3 L = normalize(LightDir);
     vec3 N = Norm;
     vec3 V = normalize(ViewDir);

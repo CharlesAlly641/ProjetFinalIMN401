@@ -23,6 +23,7 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     l_posLum = glGetUniformLocation(vp->getId(), "posLum");
     l_posCam = glGetUniformLocation(vp->getId(), "posCam");
     l_Tex = glGetUniformLocation(fp->getId(), "Tex");
+    l_Tex2 = glGetUniformLocation(fp->getId(), "Tex2");
     l_NormalMap = glGetUniformLocation(fp->getId(), "NormalMap");
 }
 
@@ -34,7 +35,8 @@ void TextureMaterial::render(Node *o) {
 
     // Liaison des textures au canaux
     if (m_Texture) { glBindTextureUnit(0, m_Texture->getId()); }
-    if (m_NormalMap) { glBindTextureUnit(1, m_NormalMap->getId()); }
+    if (m_Texture2) { glBindTextureUnit(1, m_Texture2->getId()); }
+    if (m_NormalMap) { glBindTextureUnit(2, m_NormalMap->getId()); }
 
     o->drawGeometry(GL_TRIANGLES);
     m_ProgramPipeline->release();
@@ -66,7 +68,7 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
 
 
     // Conversion de la lumière du repère scène vers le repère objet
-    Node *lumiere = Scene::getInstance()->getNode("Lumiere");
+    Node *lumiere = Scene::getInstance()->getNode("L");
     glm::vec3 LumiereScene = lumiere->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
     glm::vec3 LumiereObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(LumiereScene, o->frame());
     glProgramUniform3fv(vp->getId(), l_posLum, 1, glm::value_ptr(LumiereObjet));
@@ -81,16 +83,12 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     if (m_Texture) {
         glProgramUniform1i(fp->getId(), l_Tex, 0);
     }
+    if (m_Texture2) {
+        glProgramUniform1i(fp->getId(), l_Tex2, 1);
+    }
     if (m_NormalMap) {
-        glProgramUniform1i(fp->getId(), l_NormalMap, 1);
+        glProgramUniform1i(fp->getId(), l_NormalMap, 2);
     }
 }
 
-void TextureMaterial::setPhong(const glm::vec3 &Kd, const glm::vec3 &Ks, const glm::vec3 &Ka, float shininess) {
-    // Enregistre les paramètres localement pour la fonction animate()
-    m_Kd = Kd;
-    m_Ks = Ks;
-    m_Ka = Ka;
-    m_Shininess = shininess;
-}
 

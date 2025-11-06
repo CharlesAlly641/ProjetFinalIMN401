@@ -16,7 +16,7 @@ bool EngineGL::init() {
 
     // light node L
     Node *L = scene->getNode("L");
-    // L->frame()->translate(glm::vec3(10, 10, 0));
+    L->frame()->translate(glm::vec3(10, 10, 0));
     L->frame()->translate(glm::vec3(0, 1.75, 0));
     L->frame()->scale(glm::vec3(0.1));
     L->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
@@ -31,7 +31,7 @@ bool EngineGL::init() {
     Texture2D *textureBox = new Texture2D(ObjPath + "Textures/Box_diff.jpg");
     Texture2D *textureBoxN = new Texture2D(ObjPath + "Textures/Box_nrm.jpg");
     TextureMaterial *matBox = new TextureMaterial("matBox");
-    matBox->setDiffuseTexture(textureBox);
+    matBox->setDiffuseTexture(textureBox, nullptr);
     matBox->setNormalMap(textureBoxN);
     matBox->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 60.0);
     box->setMaterial(matBox);
@@ -42,13 +42,28 @@ bool EngineGL::init() {
     Texture2D *texturePillar = new Texture2D(ObjPath + "Textures/Pillar_diff.jpg");
     Texture2D *texturePillarN = new Texture2D(ObjPath + "Textures/Pillar_nrm.jpg");
     TextureMaterial *matPillar = new TextureMaterial("matPillar");
-    matPillar->setDiffuseTexture(texturePillar);
+    matPillar->setDiffuseTexture(texturePillar, nullptr);
     matPillar->setNormalMap(texturePillarN);
     matPillar->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
     pillar->setMaterial(matPillar);
 
     // (0,0.775,0) is the center of the pillar
+    
+    // d'un objet, méthode détaillée
+    Node *bunny = scene->getNode("Bunny");
+    bunny->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Bunny.obj"));
+    Texture2D *textureBunny = new Texture2D(ObjPath + "Textures/Bunny1.png");
+    Texture2D *textureBunny2 = new Texture2D(ObjPath + "Textures/Bunny2.png");
+    Texture2D *textureBunnyN = new Texture2D(ObjPath + "Textures/Bunny_N.png");
+    TextureMaterial* matBunny = new TextureMaterial("matBunny");
+    bunny->frame()->scale(glm::vec3(2.0));
+    bunny->frame()->translate(glm::vec3(0.0, 0.45, 0.0));
+    matBunny->setDiffuseTexture(textureBunny, textureBunny2);
+    matBunny->setNormalMap(textureBunnyN);
+    matBunny->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
+    bunny->setMaterial(matBunny);
 
+    scene->getSceneNode()->adopt(bunny);
     scene->getSceneNode()->adopt(L);
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
