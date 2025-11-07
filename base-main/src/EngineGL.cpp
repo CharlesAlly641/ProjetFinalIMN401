@@ -4,6 +4,7 @@
 
 #include "Materials/BaseMaterial/BaseMaterial.h"
 #include "Materials/TextureMaterial/TextureMaterial.h"
+#include "Materials/RotationMaterial/RotationMaterial.h"
 
 #include "Texture2D.h"
 
@@ -62,6 +63,19 @@ bool EngineGL::init() {
     matBunny->setNormalMap(textureBunnyN);
     matBunny->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
     bunny->setMaterial(matBunny);
+
+    // Création d'un noeud 
+    Node *noeud = scene->getNode("Noeud");
+    pillar->adopt(noeud);
+    noeud->setMaterial(new RotationMaterial("rotMat"));
+
+    // Création d'un objet en mouvement 
+    Node *rotObjet = scene->getNode("Objet en rotation");
+    rotObjet->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
+    rotObjet->setMaterial(new BaseMaterial("baseMat"));
+    rotObjet->frame()->translate(glm::vec3(0.5, 0.5, 0.0));
+    rotObjet->frame()->scale(glm::vec3(0.3, 0.3, 0.3));
+    noeud->adopt(rotObjet);
 
     scene->getSceneNode()->adopt(bunny);
     scene->getSceneNode()->adopt(L);
