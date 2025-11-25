@@ -86,15 +86,35 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
 
+    myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
+    display = new Display("display");
+    flou = new Flou("flou");
+
     setupEngine();
     return (true);
 }
 
 void EngineGL::render() {
     glEnable(GL_DEPTH_TEST);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    myFBO->enable();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     for (unsigned int i = 0; i < allNodes->nodes.size(); i++)
         allNodes->nodes[i]->render();
+    myFBO->disable();
+   
+    /*
+    
+    if (flou) {
+        flou->apply(myFBO, NULL);
+    }
+    */
+    
+    if (display) {
+        display->apply(myFBO, NULL);
+    }
+    
 }
 
 void EngineGL::animate(const float elapsedTime) {
@@ -133,6 +153,7 @@ void EngineGL::displayInterface() {
 
         myFBO->displayInterface();
     }
+
 }
 
 // Message callbck error for getting OpenGL problems

@@ -17,19 +17,29 @@ Display::Display(std::string name) : EffectGL(name) {
 Display::~Display() {}
 
 void Display::apply(FrameBufferObject *src, FrameBufferObject *target) {
-
     // note the most efficient but here for usability purposes (could be set up in the constructor if src is constant)
-    glProgramUniformHandleui64ARB(fp->getId(), l_Texture, src->getColorTexture()->getHandle());
+    // glProgramUniformHandleui64ARB(fp->getId(), l_Texture, src->getColorTexture()->getHandle());
+    // Définir la texture source comme src
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, src->getColorTexture()->getId());
 
+    // Définir la cible comme target si non nul
     if (target)
         target->enable();
 
+    // Nettoyer les tampons
     glDisable(GL_DEPTH_TEST);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    // Activation du pipeline
     m_ProgramPipeline->bind();
+
+    // Affichage du quad
     drawQuad();
+
+    // Désactiver le pipeline
     m_ProgramPipeline->release();
+
     if (target)
         target->disable();
 }
