@@ -89,6 +89,7 @@ bool EngineGL::init() {
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
     display = new Display("display");
     flou = new Flou("flou");
+    flouProfondeur = new FlouProfondeur("flouProf");
 
     setupEngine();
     return (true);
@@ -104,17 +105,19 @@ void EngineGL::render() {
         allNodes->nodes[i]->render();
     myFBO->disable();
    
+    if (flouProfondeur) {
+        flouProfondeur->apply(myFBO, NULL);
+    }
     /*
-    
     if (flou) {
         flou->apply(myFBO, NULL);
     }
     */
-    
+    /*
     if (display) {
         display->apply(myFBO, NULL);
     }
-    
+    */
 }
 
 void EngineGL::animate(const float elapsedTime) {

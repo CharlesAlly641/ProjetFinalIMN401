@@ -13,6 +13,7 @@
 #include "Effects/Display/Display.h"
 #include "Effects/Flou/Flou.h"
 #include "Effects/Bloom/Bloom.h"
+#include "Effects/FlouProfondeur/FlouProfondeur.h"
 
 class EngineGL {
 public:
@@ -55,5 +56,6 @@ protected:
     Display *display;
     Flou *flou;
     Bloom *bloom;
+    FlouProfondeur *flouProfondeur;
 };
 #endif

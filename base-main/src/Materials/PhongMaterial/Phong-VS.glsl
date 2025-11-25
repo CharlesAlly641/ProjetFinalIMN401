@@ -3,13 +3,9 @@
 uniform mat4 Model;
 uniform mat4 View;
 uniform mat4 Proj;
-uniform vec3 Ka;
-uniform vec3 Kd;
 uniform vec3 posLum;
 uniform vec3 posCam;
 
-out vec3 vKa;
-out vec3 vKd;
 out vec3 LightDir;
 out vec3 Norm;
 out vec3 ViewDir;
@@ -30,8 +26,6 @@ void main() {
     LightDir = posLum - Position;
     Norm = normalize(Normal);
     ViewDir = posCam - Position;
-    vKa = Ka;
-    vKd = Kd;
 
     gl_Position = Proj * View * Model * vec4(newPos, 1.0);
 

@@ -14,8 +14,8 @@ PhongMaterial::PhongMaterial(std::string name) : MaterialGL(name) {
     l_View = glGetUniformLocation(vp->getId(), "View");
     l_Proj = glGetUniformLocation(vp->getId(), "Proj");
     l_Model = glGetUniformLocation(vp->getId(), "Model");
-    l_Ka = glGetUniformLocation(vp->getId(), "Ka");
-    l_Kd = glGetUniformLocation(vp->getId(), "Kd");
+    l_Ka = glGetUniformLocation(fp->getId(), "Ka");
+    l_Kd = glGetUniformLocation(fp->getId(), "Kd");
     l_posLum = glGetUniformLocation(vp->getId(), "posLum");
     l_posCam = glGetUniformLocation(vp->getId(), "posCam");
     l_Ks = glGetUniformLocation(fp->getId(), "Ks");
@@ -51,21 +51,19 @@ void PhongMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_Proj, 1, GL_FALSE, glm::value_ptr(Proj));
 
     // On transmet les paramètres du modèle de Phong au VS
-    glProgramUniform3f(vp->getId(), l_Ka, 0.1, 0.1, 0.1);
-    glProgramUniform3f(vp->getId(), l_Kd, 0.8, 0.2, 0.2);
-    glProgramUniform3f(fp->getId(), l_Ks, 1.0, 1.0, 1.0);
+    glProgramUniform1f(fp->getId(), l_Ka, 0.1);
+    glProgramUniform1f(fp->getId(), l_Kd, 0.8);
+    glProgramUniform1f(fp->getId(), l_Ks, 1.0);
     glProgramUniform1f(fp->getId(), l_s, 32.0f);
 
-    // Conversion de la lumière du repère scène vers le repère objet
+    // Conversion de la lumière vers le repère objet
     Node *lumiere = Scene::getInstance()->getNode("Lumiere");
-    glm::vec3 LumiereScene = lumiere->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
-    glm::vec3 LumiereObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(LumiereScene, o->frame());
+    glm::vec3 LumiereObjet = lumiere->frame()->convertPtTo(glm::vec3(0.0, 0.0, 0.0), o->frame());
     glProgramUniform3fv(vp->getId(), l_posLum, 1, glm::value_ptr(LumiereObjet));
 
-    // Conversion de la caméra du repère scène vers le repère objet
+    // Conversion de la caméra vers le repère objet
     Camera *camera = Scene::getInstance()->camera();
-    glm::vec3 CameraScene = camera->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
-    glm::vec3 CameraObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(CameraScene, o->frame());
+    glm::vec3 CameraObjet = camera->frame()->convertPtTo(glm::vec3(0.0f), o->frame());
     glProgramUniform3fv(vp->getId(), l_posCam, 1, glm::value_ptr(CameraObjet));
 
 }
