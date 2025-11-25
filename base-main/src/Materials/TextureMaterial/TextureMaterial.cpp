@@ -25,6 +25,11 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     l_Tex = glGetUniformLocation(fp->getId(), "Tex");
     l_Tex2 = glGetUniformLocation(fp->getId(), "Tex2");
     l_NormalMap = glGetUniformLocation(fp->getId(), "NormalMap");
+    l_Time = glGetUniformLocation(vp->getId(), "Time");
+    l_HeightMap = glGetUniformLocation(vp->getId(), "HeightMap");
+    l_HeightScale = glGetUniformLocation(vp->getId(), "HeightScale");
+
+    m_HeightMap = nullptr;
 }
 
 TextureMaterial::~TextureMaterial() {}
@@ -37,6 +42,7 @@ void TextureMaterial::render(Node *o) {
     if (m_Texture) { glBindTextureUnit(0, m_Texture->getId()); }
     if (m_Texture2) { glBindTextureUnit(1, m_Texture2->getId()); }
     if (m_NormalMap) { glBindTextureUnit(2, m_NormalMap->getId()); }
+    if (m_HeightMap) {glBindTextureUnit(3, m_HeightMap->getId());}
 
     o->drawGeometry(GL_TRIANGLES);
     m_ProgramPipeline->release();
@@ -88,6 +94,15 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     }
     if (m_NormalMap) {
         glProgramUniform1i(fp->getId(), l_NormalMap, 2);
+    }
+    if (m_HeightMap) {
+        glProgramUniform1i(vp->getId(), l_HeightMap, 3);
+        glProgramUniform1f(vp->getId(), l_HeightScale, 0.1f); // amplitude
+    }
+
+    // Envoie du temps au VS pour le displacement mapping si c'est le bon objet
+    if (o->getName() == "Bunny") {
+        glProgramUniform1f(vp->getId(), l_Time, elapsedTime);
     }
 }
 

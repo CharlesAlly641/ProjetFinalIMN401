@@ -7,6 +7,10 @@ uniform vec3 Ka;
 uniform vec3 Kd;
 uniform vec3 posLum;
 uniform vec3 posCam;
+uniform float Time;
+
+uniform sampler2D HeightMap;
+uniform float HeightScale;
 
 out vec3 vKa;
 out vec3 vKd;
@@ -44,8 +48,13 @@ void main() {
     vKa = Ka;
     vKd = Kd;
 
-
     couleur = Texture.xy;
-    gl_Position = Proj * View * Model * vec4(Position, 1.0);
+
+    // Displacement Mapping avec HeigthMap
+    float hauteur = texture(HeightMap, couleur).r;
+    float displacement = hauteur * HeightScale;
+    vec3 displaced = Position + N * displacement;
+
+    gl_Position = Proj * View * Model * vec4(displaced, 1.0);
 
 } 

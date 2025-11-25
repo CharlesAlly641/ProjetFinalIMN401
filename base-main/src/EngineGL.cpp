@@ -63,6 +63,10 @@ bool EngineGL::init() {
     matBunny->setNormalMap(textureBunnyN);
     matBunny->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
     bunny->setMaterial(matBunny);
+    //Texture2D *height = new Texture2D(ObjPath + "Textures/Bunny_height.png");
+    //matBunny->setHeightMap(height);
+    //matBunny->setHeightScale(0.1f);
+
 
     // Création d'un noeud 
     Node *noeud = scene->getNode("Noeud");

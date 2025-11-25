@@ -36,13 +36,18 @@ public:
         m_Shininess = shininess;
     }
 
+    void setHeightMap(Texture2D *tex) { m_HeightMap = tex; }
+
+    void setHeightScale(float s) { m_HeightScale = s; }
+
 
 protected:
     // Variables de textures
     Texture2D *m_Texture;
     Texture2D *m_Texture2;
     Texture2D *m_NormalMap;
-    
+    Texture2D *m_HeightMap;
+    float m_HeightScale;
 
     // Variables de Phong
     glm::vec3 m_Ka;
@@ -57,5 +62,8 @@ protected:
     GLuint l_View, l_Proj, l_Model; 
     GLuint l_Ka, l_Kd, l_posLum, l_posCam, l_Ks, l_s;
     GLuint l_Tex, l_Tex2, l_NormalMap;
+    GLuint l_Time;
+    GLuint l_HeightMap, l_HeightScale;
+
 };
 
