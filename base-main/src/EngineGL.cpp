@@ -34,7 +34,7 @@ bool EngineGL::init() {
     TextureMaterial *matBox = new TextureMaterial("matBox");
     matBox->setDiffuseTexture(textureBox, nullptr);
     matBox->setNormalMap(textureBoxN);
-    matBox->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 60.0);
+    matBox->setPhong(1, 0.5, 0.1, 60.0);
     box->setMaterial(matBox);
 
     // Pillar
@@ -45,7 +45,7 @@ bool EngineGL::init() {
     TextureMaterial *matPillar = new TextureMaterial("matPillar");
     matPillar->setDiffuseTexture(texturePillar, nullptr);
     matPillar->setNormalMap(texturePillarN);
-    matPillar->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
+    matPillar->setPhong(1, 0.5, 0.1, 20.0);
     pillar->setMaterial(matPillar);
 
     // (0,0.775,0) is the center of the pillar
@@ -61,7 +61,7 @@ bool EngineGL::init() {
     bunny->frame()->translate(glm::vec3(0.0, 0.45, 0.0));
     matBunny->setDiffuseTexture(textureBunny, textureBunny2);
     matBunny->setNormalMap(textureBunnyN);
-    matBunny->setPhong(glm::vec3(1), glm::vec3(0.5), glm::vec3(.1), 20.0);
+    matBunny->setPhong(1, 0.5, 0.1, 20.0);
     bunny->setMaterial(matBunny);
     //Texture2D *height = new Texture2D(ObjPath + "Textures/Bunny_height.png");
     //matBunny->setHeightMap(height);

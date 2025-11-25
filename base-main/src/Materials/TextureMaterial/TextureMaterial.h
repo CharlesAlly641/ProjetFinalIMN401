@@ -28,7 +28,7 @@ public:
 
     virtual void setNormalMap(Texture2D *tex) { m_NormalMap = tex;  }
 
-    void TextureMaterial::setPhong(const glm::vec3 &Kd, const glm::vec3 &Ks, const glm::vec3 &Ka, float shininess) {
+    void TextureMaterial::setPhong(const float &Kd, const float &Ks, const float &Ka, float shininess) {
         // Enregistre les paramètres localement pour la fonction animate()
         m_Kd = Kd;
         m_Ks = Ks;
@@ -50,9 +50,9 @@ protected:
     float m_HeightScale;
 
     // Variables de Phong
-    glm::vec3 m_Ka;
-    glm::vec3 m_Kd;
-    glm::vec3 m_Ks;
+    float m_Ka;
+    float m_Kd;
+    float m_Ks;
     float m_Shininess;
 
     GLProgram *vp;

@@ -3,8 +3,6 @@
 uniform mat4 Model;
 uniform mat4 View;
 uniform mat4 Proj;
-uniform vec3 Ka;
-uniform vec3 Kd;
 uniform vec3 posLum;
 uniform vec3 posCam;
 uniform float Time;
@@ -45,8 +43,6 @@ void main() {
     Norm = vec3(0.0, 0.0, 1.0);
     vec3 V = posCam - Position;
     ViewDir = TBN * V;
-    vKa = Ka;
-    vKd = Kd;
 
     couleur = Texture.xy;
 

@@ -1,13 +1,13 @@
 #version 460
 
-uniform vec3 Ks;
+uniform float Ks;
+uniform float Kd;
+uniform float Ka;
 uniform float s;
 uniform sampler2D Tex;
 uniform sampler2D Tex2;
 uniform sampler2D NormalMap;
 
-in vec3 vKa;
-in vec3 vKd;
 in vec3 LightDir;
 in vec3 Norm;
 in vec3 ViewDir;
@@ -29,12 +29,13 @@ void main() {
     vec3 N = texNormalMap.rgb * 2.0 - 1.0; // N = (valeur réelle + 1) / 2
     vec3 V = normalize(ViewDir);
     vec3 R = reflect(-L, N);
-    vec3 ambiant = vKa;
-    vec3 diffus = vKd * max(dot(N, L), 0.0);
-    vec3 spec = Ks * pow(max(dot(R, V), 0.0), s);
+    float ambiant = Ka;
+    float diffus = Kd * max(dot(N, L), 0.0);
+    float spec = Ks * pow(max(dot(R, V), 0.0), s);
     
     // Combinaison texture + éclairage
-    vec3 Couleur = (ambiant + diffus + spec) * texMix.rgb;
+    vec3 couleurLum = vec3(1.0, 1.0, 1.0);
+    vec3 Couleur = (ambiant*texMix.rgb) + (diffus*texMix.rgb + spec) * couleurLum;
     
     // Résultat final
     Color = vec4(Couleur, 1.0);

@@ -16,8 +16,8 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     l_View = glGetUniformLocation(vp->getId(), "View");
     l_Proj = glGetUniformLocation(vp->getId(), "Proj");
     l_Model = glGetUniformLocation(vp->getId(), "Model");
-    l_Ka = glGetUniformLocation(vp->getId(), "Ka");
-    l_Kd = glGetUniformLocation(vp->getId(), "Kd");
+    l_Ka = glGetUniformLocation(fp->getId(), "Ka");
+    l_Kd = glGetUniformLocation(fp->getId(), "Kd");
     l_Ks = glGetUniformLocation(fp->getId(), "Ks");
     l_s = glGetUniformLocation(fp->getId(), "s");
     l_posLum = glGetUniformLocation(vp->getId(), "posLum");
@@ -67,22 +67,20 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_Proj, 1, GL_FALSE, glm::value_ptr(Proj));
 
     // On transmet les paramètres du modèle de Phong au VS
-    glProgramUniform3fv(vp->getId(), l_Ka, 1, glm::value_ptr(m_Ka));
-    glProgramUniform3fv(vp->getId(), l_Kd, 1, glm::value_ptr(m_Kd));
-    glProgramUniform3fv(fp->getId(), l_Ks, 1, glm::value_ptr(m_Ks));
+    glProgramUniform1f(fp->getId(), l_Ka, m_Ka);
+    glProgramUniform1f(fp->getId(), l_Kd, m_Kd);
+    glProgramUniform1f(fp->getId(), l_Ks, m_Ks);
     glProgramUniform1f(fp->getId(), l_s, m_Shininess);
 
 
     // Conversion de la lumière du repère scène vers le repère objet
     Node *lumiere = Scene::getInstance()->getNode("L");
-    glm::vec3 LumiereScene = lumiere->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
-    glm::vec3 LumiereObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(LumiereScene, o->frame());
+    glm::vec3 LumiereObjet = lumiere->frame()->convertPtTo(glm::vec3(0.0, 0.0, 0.0), o->frame());
     glProgramUniform3fv(vp->getId(), l_posLum, 1, glm::value_ptr(LumiereObjet));
 
     // Conversion de la caméra du repère scène vers le repère objet
     Camera *camera = Scene::getInstance()->camera();
-    glm::vec3 CameraScene = camera->frame()->getModelMatrix() * glm::vec4(0.0, 0.0, 0.0, 1.0);
-    glm::vec3 CameraObjet = Scene::getInstance()->getSceneNode()->frame()->convertPtTo(CameraScene, o->frame());
+    glm::vec3 CameraObjet = camera->frame()->convertPtTo(glm::vec3(0.0, 0.0, 0.0), o->frame());
     glProgramUniform3fv(vp->getId(), l_posCam, 1, glm::value_ptr(CameraObjet));
 
     // On indique au Fragment Shader où se trouve les textures
