@@ -72,14 +72,15 @@ bool EngineGL::init() {
     Node *noeud = scene->getNode("Noeud");
     pillar->adopt(noeud);
     noeud->setMaterial(new RotationMaterial("rotMat"));
-
+    
     // Création d'un objet en mouvement 
     Node *rotObjet = scene->getNode("Objet en rotation");
-    rotObjet->setModel(scene->m_Models.get<ModelGL>(ObjPath + "rocket_toy.obj"));
+    rotObjet->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
     rotObjet->setMaterial(new BaseMaterial("baseMat"));
     rotObjet->frame()->translate(glm::vec3(0.5, 0.5, 0.0));
     rotObjet->frame()->scale(glm::vec3(0.3, 0.3, 0.3));
     noeud->adopt(rotObjet);
+    
 
      // Création d'un objet sol
     Node *sol = scene->getNode("Sol");
@@ -98,10 +99,6 @@ bool EngineGL::init() {
     solMat->setDiffuseTexture(textureSol, nullptr);
     solMat->setNormalMap(textureSolN);
 
-    Node *tree = scene->getNode("tree");
-    tree->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Tree1.obj"));
-    tree->setMaterial(new BaseMaterial("tree"));
-    scene->getSceneNode()->adopt(tree);
     
 
     scene->getSceneNode()->adopt(bunny);
