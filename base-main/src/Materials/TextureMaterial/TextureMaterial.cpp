@@ -21,6 +21,7 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     l_Ks = glGetUniformLocation(fp->getId(), "Ks");
     l_s = glGetUniformLocation(fp->getId(), "s");
     l_posLum = glGetUniformLocation(vp->getId(), "posLum");
+    l_posLum2 = glGetUniformLocation(vp->getId(), "posLum2");
     l_posCam = glGetUniformLocation(vp->getId(), "posCam");
     l_Tex = glGetUniformLocation(fp->getId(), "Tex");
     l_Tex2 = glGetUniformLocation(fp->getId(), "Tex2");
@@ -77,6 +78,11 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     Node *lumiere = Scene::getInstance()->getNode("L");
     glm::vec3 LumiereObjet = lumiere->frame()->convertPtTo(glm::vec3(0.0, 0.0, 0.0), o->frame());
     glProgramUniform3fv(vp->getId(), l_posLum, 1, glm::value_ptr(LumiereObjet));
+
+    
+    Node *lumiere2 = Scene::getInstance()->getNode("Objet en rotation");
+    glm::vec3 LumiereObjet2 = lumiere2->frame()->convertPtTo(glm::vec3(0.0, 0.0, 0.0), o->frame());
+    glProgramUniform3fv(vp->getId(), l_posLum2, 1, glm::value_ptr(LumiereObjet2));
 
     // Conversion de la caméra du repère scène vers le repère objet
     Camera *camera = Scene::getInstance()->camera();

@@ -8,6 +8,7 @@ uniform sampler2D Tex;
 uniform sampler2D Tex2;
 uniform sampler2D NormalMap;
 
+in vec3 LightDir2;
 in vec3 LightDir;
 in vec3 Norm;
 in vec3 ViewDir;
@@ -26,16 +27,20 @@ void main() {
 
     // Calcul des paramètres de Phong avec posLum1
     vec3 L = normalize(LightDir);
+    vec3 L2 = normalize(LightDir2);
     vec3 N = texNormalMap.rgb * 2.0 - 1.0; // N = (valeur réelle + 1) / 2
     vec3 V = normalize(ViewDir);
     vec3 R = reflect(-L, N);
+    vec3 R2 = reflect(-L2, N);
     float ambiant = Ka;
     float diffus = Kd * max(dot(N, L), 0.0);
+    float diffus2 = Kd * max(dot(N, L2), 0.0);
     float spec = Ks * pow(max(dot(R, V), 0.0), s);
+    float spec2 = Ks * pow(max(dot(R2, V), 0.0), s);
     
     // Combinaison texture + éclairage
     vec3 couleurLum = vec3(1.0, 1.0, 1.0);
-    vec3 Couleur = (ambiant*texMix.rgb) + (diffus*texMix.rgb + spec) * couleurLum;
+    vec3 Couleur = (ambiant*texMix.rgb) + ((diffus+diffus2)*texMix.rgb + (spec+spec2)) * couleurLum;
     
     // Résultat final
     Color = vec4(Couleur, 1.0);

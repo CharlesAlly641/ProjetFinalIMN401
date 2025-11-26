@@ -75,16 +75,40 @@ bool EngineGL::init() {
 
     // Création d'un objet en mouvement 
     Node *rotObjet = scene->getNode("Objet en rotation");
-    rotObjet->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
+    rotObjet->setModel(scene->m_Models.get<ModelGL>(ObjPath + "rocket_toy.obj"));
     rotObjet->setMaterial(new BaseMaterial("baseMat"));
     rotObjet->frame()->translate(glm::vec3(0.5, 0.5, 0.0));
     rotObjet->frame()->scale(glm::vec3(0.3, 0.3, 0.3));
     noeud->adopt(rotObjet);
 
+     // Création d'un objet sol
+    Node *sol = scene->getNode("Sol");
+    sol->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Wall.obj"));
+    TextureMaterial* solMat = new TextureMaterial("solMat");
+    sol->setMaterial(solMat);
+    scene->getSceneNode()->adopt(sol);
+    sol->frame()->translate(glm::vec3(0.0, -0.1, 0.0));
+    sol->frame()->scale(glm::vec3(1.0, 1.0, 1.0));
+
+    solMat->setPhong(1, 0.5, 0.1, 20.0);
+
+    // Création de la texture du sol
+    Texture2D *textureSol = new Texture2D(ObjPath + "Textures/Ground/Ground013_4K-JPG_Color.jpg");
+    Texture2D *textureSolN = new Texture2D(ObjPath + "Textures/Ground/Ground013_4K-JPG_NormalDX.jpg");
+    solMat->setDiffuseTexture(textureSol, nullptr);
+    solMat->setNormalMap(textureSolN);
+
+    Node *tree = scene->getNode("tree");
+    tree->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Tree1.obj"));
+    tree->setMaterial(new BaseMaterial("tree"));
+    scene->getSceneNode()->adopt(tree);
+    
+
     scene->getSceneNode()->adopt(bunny);
     scene->getSceneNode()->adopt(L);
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
+    scene->getSceneNode()->adopt(sol);
 
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
     display = new Display("display");

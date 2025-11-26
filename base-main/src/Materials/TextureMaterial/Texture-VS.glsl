@@ -6,6 +6,7 @@ uniform mat4 Proj;
 uniform vec3 posLum;
 uniform vec3 posCam;
 uniform float Time;
+uniform vec3 posLum2;
 
 uniform sampler2D HeightMap;
 uniform float HeightScale;
@@ -16,6 +17,7 @@ out vec3 LightDir;
 out vec3 Norm;
 out vec3 ViewDir;
 out vec2 couleur;
+out vec3 LightDir2;
 
 out gl_PerVertex {
     vec4 gl_Position;
@@ -39,7 +41,9 @@ void main() {
 
     // Calcul des paramètres de Phong transmis au FS
     vec3 L = posLum - Position;
+    vec3 L2 = posLum2 - Position;
     LightDir = TBN * L;
+    LightDir2 = TBN * L2;
     Norm = vec3(0.0, 0.0, 1.0);
     vec3 V = posCam - Position;
     ViewDir = TBN * V;

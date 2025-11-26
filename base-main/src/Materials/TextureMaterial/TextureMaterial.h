@@ -60,7 +60,7 @@ protected:
 
     // Localisation des variables uniformes
     GLuint l_View, l_Proj, l_Model; 
-    GLuint l_Ka, l_Kd, l_posLum, l_posCam, l_Ks, l_s;
+    GLuint l_Ka, l_Kd, l_posLum, l_posCam, l_Ks, l_s, l_posLum2;
     GLuint l_Tex, l_Tex2, l_NormalMap;
     GLuint l_Time;
     GLuint l_HeightMap, l_HeightScale;
