@@ -37,9 +37,6 @@ public:
         m_Shininess = shininess;
     }
 
-    void setHeightMap(Texture2D *tex) { m_HeightMap = tex; }
-
-    void setHeightScale(float s) { m_HeightScale = s; }
 
 
 protected:
@@ -47,8 +44,6 @@ protected:
     Texture2D *m_Texture;
     Texture2D *m_Texture2;
     Texture2D *m_NormalMap;
-    Texture2D *m_HeightMap;
-    float m_HeightScale;
 
     // Variables de Phong
     float m_Ka;
@@ -64,7 +59,6 @@ protected:
     GLuint l_Ka, l_Kd, l_posLum, l_posCam, l_Ks, l_s, l_posLum2;
     GLuint l_Tex, l_Tex2, l_NormalMap;
     GLuint l_Time;
-    GLuint l_HeightMap, l_HeightScale;
 
 };
 

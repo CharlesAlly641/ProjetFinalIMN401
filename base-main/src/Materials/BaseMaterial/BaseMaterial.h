@@ -22,6 +22,7 @@ protected:
     GLProgram *fp;
 
     GLuint l_View, l_Proj, l_Model; // location of uniforms
+    GLuint l_Time, l_Amplitude;
 };
 
 #endif

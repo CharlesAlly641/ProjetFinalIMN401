@@ -39,7 +39,7 @@ void main() {
     float spec2 = Ks * pow(max(dot(R2, V), 0.0), s);
     
     // Combinaison texture + éclairage
-    vec3 couleurLum = vec3(1.0, 1.0, 1.0);
+    vec3 couleurLum = vec3(0.7, 0.7, 0.7);
     vec3 Couleur = (ambiant*texMix.rgb) + ((diffus+diffus2)*texMix.rgb + (spec+spec2)) * couleurLum;
     
     // Résultat final

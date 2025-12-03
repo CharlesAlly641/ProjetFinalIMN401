@@ -53,7 +53,7 @@ bool EngineGL::init() {
 
     // (0,0.775,0) is the center of the pillar
     
-    // d'un objet, méthode détaillée
+    // Création du bunny
     Node *bunny = scene->getNode("Bunny");
     bunny->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Bunny.obj"));
     Texture2D *textureBunny = new Texture2D(ObjPath + "Textures/Bunny1.png");
@@ -61,26 +61,24 @@ bool EngineGL::init() {
     Texture2D *textureBunnyN = new Texture2D(ObjPath + "Textures/Bunny_N.png");
     TextureMaterial* matBunny = new TextureMaterial("matBunny");
     bunny->frame()->scale(glm::vec3(2.0));
-    bunny->frame()->translate(glm::vec3(0.0, 0.45, 0.0));
+    bunny->frame()->translate(glm::vec3(1.0, 0.03, 1.0));
     matBunny->setDiffuseTexture(textureBunny, textureBunny2);
     matBunny->setNormalMap(textureBunnyN);
-    matBunny->setPhong(1, 0.5, 0.1, 20.0);
+    matBunny->setPhong(1, 0.5, 0.1, 32.0);
     bunny->setMaterial(matBunny);
-    //Texture2D *height = new Texture2D(ObjPath + "Textures/Bunny_height.png");
-    //matBunny->setHeightMap(height);
-    //matBunny->setHeightScale(0.1f);
 
+    // Création de l'objet statue (sur le pilier)
     Node *statue = scene->getNode("statue");
     statue->setModel(scene->m_Models.get<ModelGL>(ObjPath + "lion.obj"));
     Texture2D *textureStatue = new Texture2D(ObjPath + "Textures/textures_lion/material0_basecolor.png");
-    Texture2D *textureStatueN = new Texture2D(ObjPath + "Textures/textures_lion/material0_normal");
+    Texture2D *textureStatueN = new Texture2D(ObjPath + "Textures/textures_lion/material0_normal.png");
     TextureMaterial *matStatue = new TextureMaterial("matStatue");
     statue->frame()->scale(glm::vec3(0.013));
     statue->frame()->translate(glm::vec3(-1.0,35.0, 0.0));
     statue->frame()->rotate(glm::vec3(1.0, 0.0, 0.0), -M_PI / 2);
     matStatue->setDiffuseTexture(textureStatue, nullptr);
     matStatue->setNormalMap(textureStatueN);
-    matStatue->setPhong(1, 0.5, 0.1, 20.0);
+    matStatue->setPhong(1, 0.5, 0.1, 32.0);
     statue->setMaterial(matStatue);
 
     // Création d'un noeud 
@@ -92,12 +90,11 @@ bool EngineGL::init() {
     Node *rotObjet = scene->getNode("Objet en rotation");
     rotObjet->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
     rotObjet->setMaterial(new BaseMaterial("baseMat"));
-    rotObjet->frame()->translate(glm::vec3(0.5, 0.5, 0.0));
+    rotObjet->frame()->translate(glm::vec3(0.5, 1.2, 0.0));
     rotObjet->frame()->scale(glm::vec3(0.3, 0.3, 0.3));
     noeud->adopt(rotObjet);
-    
 
-     // Création d'un objet sol
+    // Création d'un objet sol
     Node *sol = scene->getNode("Sol");
     sol->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Wall.obj"));
     TextureMaterial* solMat = new TextureMaterial("solMat");
@@ -105,8 +102,7 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(sol);
     sol->frame()->translate(glm::vec3(0.0, -0.1, 0.0));
     sol->frame()->scale(glm::vec3(1.0, 1.0, 1.0));
-
-    solMat->setPhong(1, 0.5, 0.1, 20.0);
+    solMat->setPhong(1, 0.5, 0.1, 32.0);
 
     // Création de la texture du sol
     Texture2D *textureSol = new Texture2D(ObjPath + "Textures/Ground/Ground013_4K-JPG_Color.jpg");
@@ -114,9 +110,8 @@ bool EngineGL::init() {
     solMat->setDiffuseTexture(textureSol, nullptr);
     solMat->setNormalMap(textureSolN);
 
-    
-
-    //scene->getSceneNode()->adopt(bunny);
+    // Ajout des objets dans la scène
+    scene->getSceneNode()->adopt(bunny);
     scene->getSceneNode()->adopt(L);
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
