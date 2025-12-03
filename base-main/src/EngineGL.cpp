@@ -8,6 +8,8 @@
 
 #include "Texture2D.h"
 
+#define M_PI 3.14159265358979323846264338327950288
+
 bool EngineGL::init() {
     LOG_INFO << "Initializing Scene" << std::endl;
 
@@ -46,6 +48,7 @@ bool EngineGL::init() {
     matPillar->setDiffuseTexture(texturePillar, nullptr);
     matPillar->setNormalMap(texturePillarN);
     matPillar->setPhong(1, 0.5, 0.1, 20.0);
+    pillar->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), -M_PI / 6);
     pillar->setMaterial(matPillar);
 
     // (0,0.775,0) is the center of the pillar
@@ -67,6 +70,18 @@ bool EngineGL::init() {
     //matBunny->setHeightMap(height);
     //matBunny->setHeightScale(0.1f);
 
+    Node *statue = scene->getNode("statue");
+    statue->setModel(scene->m_Models.get<ModelGL>(ObjPath + "lion.obj"));
+    Texture2D *textureStatue = new Texture2D(ObjPath + "Textures/textures_lion/material0_basecolor.png");
+    Texture2D *textureStatueN = new Texture2D(ObjPath + "Textures/textures_lion/material0_normal");
+    TextureMaterial *matStatue = new TextureMaterial("matStatue");
+    statue->frame()->scale(glm::vec3(0.013));
+    statue->frame()->translate(glm::vec3(-1.0,35.0, 0.0));
+    statue->frame()->rotate(glm::vec3(1.0, 0.0, 0.0), -M_PI / 2);
+    matStatue->setDiffuseTexture(textureStatue, nullptr);
+    matStatue->setNormalMap(textureStatueN);
+    matStatue->setPhong(1, 0.5, 0.1, 20.0);
+    statue->setMaterial(matStatue);
 
     // Création d'un noeud 
     Node *noeud = scene->getNode("Noeud");
@@ -101,11 +116,12 @@ bool EngineGL::init() {
 
     
 
-    scene->getSceneNode()->adopt(bunny);
+    //scene->getSceneNode()->adopt(bunny);
     scene->getSceneNode()->adopt(L);
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
     scene->getSceneNode()->adopt(sol);
+    scene->getSceneNode()->adopt(statue);
 
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
     display = new Display("display");

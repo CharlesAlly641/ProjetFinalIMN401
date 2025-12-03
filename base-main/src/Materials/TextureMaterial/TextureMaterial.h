@@ -21,7 +21,8 @@ public:
         }
         if (tex2) {
             m_Texture2 = tex2;
-        } else {
+        } 
+        else {
             m_Texture2 = nullptr;
         }
     }
