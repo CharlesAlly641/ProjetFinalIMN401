@@ -81,6 +81,19 @@ bool EngineGL::init() {
     matStatue->setPhong(1, 0.5, 0.1, 32.0);
     statue->setMaterial(matStatue);
 
+    // Création de la roche 
+    Node *boulder = scene->getNode("Boulder");
+    boulder->setModel(scene->m_Models.get<ModelGL>(ObjPath + "boulder_01_4k.obj"));
+    Texture2D *textureBoulder = new Texture2D(ObjPath + "Textures/boulder_01_diff_4k.jpg");
+    Texture2D *textureBoulderN = new Texture2D(ObjPath + "Textures/boulder_01_nor_gl_4k.png"); // normal map en EXR
+    TextureMaterial *matBoulder = new TextureMaterial("matBoulder");
+    matBoulder->setDiffuseTexture(textureBoulder, nullptr);
+    matBoulder->setNormalMap(textureBoulderN);
+    matBoulder->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
+    boulder->frame()->translate(glm::vec3(-3.0f, 0.0f, 2.5f)); // position sur le sol
+    boulder->frame()->scale(glm::vec3(1.5f));                 
+    boulder->setMaterial(matBoulder);
+
     // Création d'un noeud 
     Node *noeud = scene->getNode("Noeud");
     pillar->adopt(noeud);
@@ -117,6 +130,8 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(pillar);
     scene->getSceneNode()->adopt(sol);
     scene->getSceneNode()->adopt(statue);
+    scene->getSceneNode()->adopt(boulder);
+
 
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
     display = new Display("display");
