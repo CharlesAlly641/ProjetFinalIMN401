@@ -4,6 +4,7 @@
 Scene::Scene() {
 
     LOG_TRACE << "Creating Scene" << std::endl;
+    m_Start = clock();
     // Get the root Node
     m_Root = m_Nodes.get("Root");
 
@@ -130,4 +131,9 @@ void Scene::displayInterface() {
     }
 
     ImGui::End();
+}
+
+float Scene::getTime() {
+    clock_t now = clock();
+    return (float)(now - m_Start) * 1000.0f / CLOCKS_PER_SEC;
 }

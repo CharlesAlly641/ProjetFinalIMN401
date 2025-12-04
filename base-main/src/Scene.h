@@ -6,6 +6,7 @@
 #include "Node.h"
 #include "Resource_mgr.hpp"
 #include "Singleton.h"
+#include "time.h"
 
 class EffectGL;
 
@@ -59,6 +60,7 @@ public:
     Resource_mgr<EffectGL> m_Effects;
     Resource_mgr<ModelGL> m_Models;
     bool needupdate;
+    float getTime();
 
 private:
     Scene();
@@ -66,6 +68,7 @@ private:
 
     Node *m_Root;
     Node *m_Scene;
+    clock_t m_Start;
 
     int m_width, m_height;
 

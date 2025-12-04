@@ -16,6 +16,7 @@ BaseMaterial::BaseMaterial(std::string name) : MaterialGL(name) {
     l_Model = glGetUniformLocation(vp->getId(), "Model");
     l_Time = glGetUniformLocation(vp->getId(), "Time");
     l_Amplitude = glGetUniformLocation(vp->getId(), "Amplitude");
+    l_Frequence = glGetUniformLocation(vp->getId(), "Frequence");
 }
 
 BaseMaterial::~BaseMaterial() {}
@@ -40,7 +41,8 @@ void BaseMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_Model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
     if (o->getName() == "Objet en rotation") {
-        glProgramUniform1f(vp->getId(), l_Time, elapsedTime);
-        glProgramUniform1f(vp->getId(), l_Amplitude, 0.01f);
+        glProgramUniform1f(vp->getId(), l_Time, scene->getTime());
+        glProgramUniform1f(vp->getId(), l_Amplitude, 0.25f);
+        glProgramUniform1f(vp->getId(), l_Frequence, 0.003f);
     } 
 }

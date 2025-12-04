@@ -6,6 +6,7 @@ uniform mat4 Proj;
 
 uniform float Time;
 uniform float Amplitude; 
+uniform float Frequence;
 
 out gl_PerVertex {
     vec4 gl_Position;
@@ -17,9 +18,14 @@ layout(location = 2) in vec3 Normal;
 void main()
 {
 
-    float displacement = Amplitude * (sin(10 * Position.x * Time) + sin(10 * Position.y * Time) + sin(10 * Position.z * Time));
+    float displacement = Amplitude * cos(Time * Frequence);
 
     vec3 displacedPos = Position + Normal * displacement;
 
-    gl_Position = Proj * View * Model * vec4(displacedPos, 1.0);
+    float amplitude = 0.5;
+	float vitesse = 0.002;
+	float decalage = amplitude * sin(Time * vitesse);
+
+
+    gl_Position = Proj * View * Model * vec4(displacedPos + decalage, 1.0);
 }
