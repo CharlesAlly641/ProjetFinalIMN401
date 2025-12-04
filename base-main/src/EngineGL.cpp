@@ -94,6 +94,19 @@ bool EngineGL::init() {
     boulder->frame()->scale(glm::vec3(1.5f));                 
     boulder->setMaterial(matBoulder);
 
+    // Création du tronc d’arbre 
+    Node *stump = scene->getNode("TreeStump");
+    stump->setModel(scene->m_Models.get<ModelGL>(ObjPath + "tree_stump_01_4k.obj"));
+    Texture2D *textureStump = new Texture2D(ObjPath + "Textures/tree_stump_01_diff_4k.jpg");
+    Texture2D *textureStumpN = new Texture2D(ObjPath + "Textures/tree_stump_01_nor_gl_4k.jpg");
+    TextureMaterial *matStump = new TextureMaterial("matStump");
+    matStump->setDiffuseTexture(textureStump, nullptr);
+    matStump->setNormalMap(textureStumpN);
+    matStump->setPhong(1, 0.5, 0.2, 32.0);
+    stump->frame()->scale(glm::vec3(0.25));                  
+    stump->frame()->translate(glm::vec3(8.0, -0.10, 5.5));
+    stump->setMaterial(matStump);
+
     // Création d'un noeud 
     Node *noeud = scene->getNode("Noeud");
     pillar->adopt(noeud);
@@ -131,6 +144,7 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(sol);
     scene->getSceneNode()->adopt(statue);
     scene->getSceneNode()->adopt(boulder);
+    scene->getSceneNode()->adopt(stump);
 
 
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
