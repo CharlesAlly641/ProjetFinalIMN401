@@ -50,7 +50,7 @@ void FlouProfondeur::apply(FrameBufferObject *src, FrameBufferObject *target) {
     m_ProgramPipeline->useProgramStage(fp, GL_FRAGMENT_SHADER_BIT);
     m_ProgramPipeline->link();
 
-    // Passage des paramètres au VS
+    // Passage des paramètres au FS
     glProgramUniform1i(fp->getId(), l_TextureScene, 0);
     glProgramUniform1i(fp->getId(), l_TextureFloue, 1);
     glProgramUniform1f(fp->getId(), l_FocusDistance, 0.0f); // Distance à partir du centre où on a une zone nette
@@ -66,6 +66,7 @@ void FlouProfondeur::apply(FrameBufferObject *src, FrameBufferObject *target) {
     // Désactiver le pipeline et les textures
     m_ProgramPipeline->release();
 
+    // Désactiver les textures
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, 0);
     glActiveTexture(GL_TEXTURE0);

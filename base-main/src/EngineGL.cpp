@@ -100,7 +100,7 @@ bool EngineGL::init() {
     noeud->setMaterial(new RotationMaterial("rotMat"));
     
     // Création d'un objet en mouvement 
-    Node *rotObjet = scene->getNode("Objet en rotation");
+    Node *rotObjet = scene->getNode("Objet en mouvement");
     rotObjet->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
     rotObjet->setMaterial(new BaseMaterial("baseMat"));
     rotObjet->frame()->translate(glm::vec3(0.5, 1.2, 0.0));

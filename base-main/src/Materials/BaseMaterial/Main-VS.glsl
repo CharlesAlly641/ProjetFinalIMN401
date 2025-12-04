@@ -8,11 +8,10 @@ uniform float Time;
 uniform float Amplitude; 
 uniform float Frequence;
 
-out float pic;
-
 out gl_PerVertex {
     vec4 gl_Position;
 };
+flat out float pic;
 
 layout(location = 0) in vec3 Position;
 layout(location = 2) in vec3 Normal;
@@ -23,7 +22,7 @@ void main()
     pic = 0.0;
 
     // Déformation aux sommets qui ont des index "pairs" uniquement
-    if (gl_VertexID % 2 == 0)
+    if (gl_VertexID %  2 == 0)
     {
         float displacement = Amplitude * cos(Time * Frequence);
         displacedPos += Normal * displacement;
