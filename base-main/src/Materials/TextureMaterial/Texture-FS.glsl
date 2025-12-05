@@ -28,7 +28,7 @@ void main() {
     // Calcul des paramètres de Phong avec posLum1 et posLum2
     vec3 L = normalize(LightDir);
     vec3 L2 = normalize(LightDir2);
-    vec3 N = texNormalMap.rgb * 2.0 - 1.0; // N = (valeur réelle + 1) / 2
+    vec3 N = normalize(texNormalMap.rgb * 2.0 - 1.0); // N = (valeur réelle + 1) / 2
     vec3 V = normalize(ViewDir);
     vec3 R = reflect(-L, N);
     vec3 R2 = reflect(-L2, N);

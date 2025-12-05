@@ -22,6 +22,7 @@ bool EngineGL::init() {
     L->frame()->translate(glm::vec3(10, 10, 0));
     L->frame()->translate(glm::vec3(0, 1.75, 0));
     L->frame()->scale(glm::vec3(0.1));
+    L->frame()->translate(glm::vec3(-160.0, -30.0, 45.0));
     L->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Sphere.obj"));
     scene->getSceneNode()->adopt(L);
 
