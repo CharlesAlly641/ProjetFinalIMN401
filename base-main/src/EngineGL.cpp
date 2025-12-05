@@ -147,9 +147,14 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(stump);
 
 
+    // Création des FBOs
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
+    bloomFBO = new FrameBufferObject("bloomFBO", m_Width, m_Height);
+
+    // Création des effets de post-process
     display = new Display("display");
     flou = new Flou("flou");
+    bloom = new Bloom("bloom");
     flouProfondeur = new FlouProfondeur("flouProf");
 
     setupEngine();
@@ -165,20 +170,9 @@ void EngineGL::render() {
     for (unsigned int i = 0; i < allNodes->nodes.size(); i++)
         allNodes->nodes[i]->render();
     myFBO->disable();
-   
-    if (flouProfondeur) {
-        flouProfondeur->apply(myFBO, NULL);
-    }
-    /*
-    if (flou) {
-        flou->apply(myFBO, NULL);
-    }
-    */
-    /*
-    if (display) {
-        display->apply(myFBO, NULL);
-    }
-    */
+    bloom->apply(myFBO, bloomFBO);
+    flouProfondeur->apply(bloomFBO, NULL);
+    
 }
 
 void EngineGL::animate(const float elapsedTime) {

@@ -11,8 +11,7 @@ FlouProfondeur::FlouProfondeur(std::string name) : EffectGL(name) {
 
     l_TextureScene = glGetUniformLocation(fp->getId(), "textureScene");
     l_TextureFloue = glGetUniformLocation(fp->getId(), "textureFloue");
-    l_FocusDistance = glGetUniformLocation(fp->getId(), "distanceFocus");
-    l_FocusPlage = glGetUniformLocation(fp->getId(), "plageFocus");
+    l_LargeurZoneNonFloue = glGetUniformLocation(fp->getId(), "zoneNette");
     l_QuantiteFlou = glGetUniformLocation(fp->getId(), "quantiteFlou");
 
 }
@@ -38,8 +37,6 @@ void FlouProfondeur::apply(FrameBufferObject *src, FrameBufferObject *target) {
     // Définir la cible comme target si non nul
     if (target)
         target->enable();
-    else
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // Nettoyer les tampons
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -50,12 +47,11 @@ void FlouProfondeur::apply(FrameBufferObject *src, FrameBufferObject *target) {
     m_ProgramPipeline->useProgramStage(fp, GL_FRAGMENT_SHADER_BIT);
     m_ProgramPipeline->link();
 
-    // Passage des paramètres au FS
+    // Passage des uniformes au FS
     glProgramUniform1i(fp->getId(), l_TextureScene, 0);
     glProgramUniform1i(fp->getId(), l_TextureFloue, 1);
-    glProgramUniform1f(fp->getId(), l_FocusDistance, 0.0f); // Distance à partir du centre où on a une zone nette
-    glProgramUniform1f(fp->getId(), l_FocusPlage, 0.2f);    // Largeur de la zone nette
-    glProgramUniform1f(fp->getId(), l_QuantiteFlou, 1.0f);  // Quantité de flou
+    glProgramUniform1f(fp->getId(), l_LargeurZoneNonFloue, 0.2f);   
+    glProgramUniform1f(fp->getId(), l_QuantiteFlou, 1.0f);  
 
     // Activer le pipeline
     m_ProgramPipeline->bind();
@@ -74,8 +70,6 @@ void FlouProfondeur::apply(FrameBufferObject *src, FrameBufferObject *target) {
 
     if (target)
         target->disable();
-    else
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void FlouProfondeur::animate(const float elapsedTime) {

@@ -2,9 +2,8 @@
 
 uniform sampler2D textureScene;      
 uniform sampler2D textureFloue;     
-
-uniform float distanceFocus;         
-uniform float plageFocus;            
+     
+uniform float zoneNette;           
 uniform float quantiteFlou;          
 
 in vec2 uv;
@@ -12,7 +11,6 @@ in vec2 uv;
 layout(location = 0) out vec4 Couleur;
 
 void main() {
-    // Calcul des couleurs nette et floue
     vec3 couleurNette = texture(textureScene, uv).rgb;
     vec3 couleurFloue = texture(textureFloue, uv).rgb;
     
@@ -23,14 +21,12 @@ void main() {
     // Calcul combien de flou s'applique selon la position
     float facteurFlou = 0.0; 
     
-    // Différence entre la distance actuelle et la distance de focus
-    float differenceProfondeur = abs(dist - distanceFocus);
-    
     // Si on est en dehors de la zone nette, on applique du flou
-    if (differenceProfondeur > plageFocus) {
-        // Calcul de l'intensité du flou
-        facteurFlou = (differenceProfondeur - plageFocus) / plageFocus;
-        facteurFlou = clamp(facteurFlou, 0.0, 1.0); // On ne veut pas que notre facteur excède 1
+    if (dist > zoneNette) {
+        // Calcul de l'intensité du flou entre 0 et 1
+        facteurFlou = (dist - zoneNette) / zoneNette;
+        facteurFlou = clamp(facteurFlou, 0.0, 1.0); 
+
         // Application de l'intensité globale du flou
         facteurFlou = facteurFlou * quantiteFlou;
     }
@@ -40,6 +36,5 @@ void main() {
     
     // Mélange des deux versions de couleur
     vec3 couleurFinale = mix(couleurNette, couleurFloue, facteurFlou);
-    
     Couleur = vec4(couleurFinale, 1.0);
 }

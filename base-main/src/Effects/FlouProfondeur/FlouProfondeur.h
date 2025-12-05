@@ -22,7 +22,6 @@ protected:
 
     GLuint l_TextureScene;
     GLuint l_TextureFloue;
-    GLuint l_FocusDistance;
-    GLuint l_FocusPlage;
+    GLuint l_LargeurZoneNonFloue;
     GLuint l_QuantiteFlou;
 };

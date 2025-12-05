@@ -11,9 +11,10 @@ Bloom::Bloom(std::string name) : EffectGL(name) {
 
     flou = new Flou("FlouBloom");
 
-    l_TextureSrc = glGetUniformLocation(fpCombine->getId(), "myFBO");
-    l_TextureBloom = glGetUniformLocation(fpCombine->getId(), "bloomTexture");
+    l_TextureSrc = glGetUniformLocation(fpExtract->getId(), "myFBO");
     l_Seuil = glGetUniformLocation(fpExtract->getId(), "seuil");
+    l_TextureSrc2 = glGetUniformLocation(fpCombine->getId(), "myFBO");
+    l_TextureBloom = glGetUniformLocation(fpCombine->getId(), "bloomTexture");
 }
 
 Bloom::~Bloom() {
@@ -42,8 +43,8 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
      m_ProgramPipeline->useProgramStage(fpExtract, GL_FRAGMENT_SHADER_BIT);
      m_ProgramPipeline->link();
 
-     glProgramUniform1i(fpExtract->getId(), glGetUniformLocation(fpExtract->getId(), "myFBO"), 0);
-     glProgramUniform1f(fpExtract->getId(), l_Seuil, 0.1f);
+     glProgramUniform1i(fpExtract->getId(), l_TextureSrc, 0);
+     glProgramUniform1f(fpExtract->getId(), l_Seuil, 0.75f);
 
      // Activer le pipeline
      m_ProgramPipeline->bind();
@@ -85,8 +86,8 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
     m_ProgramPipeline->useProgramStage(fpCombine, GL_FRAGMENT_SHADER_BIT);
     m_ProgramPipeline->link();
 
-    glProgramUniform1i(fpCombine->getId(),glGetUniformLocation(fpCombine->getId(), "myFBO"),0); 
-    glProgramUniform1i(fpCombine->getId(), glGetUniformLocation(fpCombine->getId(), "bloomTexture"), 1); 
+    glProgramUniform1i(fpCombine->getId(), l_TextureSrc, 0); 
+    glProgramUniform1i(fpCombine->getId(), l_TextureBloom, 1); 
 
     // Activer le pipeline
     m_ProgramPipeline->bind();

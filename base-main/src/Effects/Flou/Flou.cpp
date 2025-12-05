@@ -60,8 +60,6 @@ void Flou::apply(FrameBufferObject *src, FrameBufferObject *target) {
     // 2. Définir la cible comme target si non nul (activer le FBO target)
     if (target)
         target->enable();
-    else
-        glBindFramebuffer(GL_FRAMEBUFFER, 0); // Si target null → écran
 
     // 3. Nettoyer les tampons
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

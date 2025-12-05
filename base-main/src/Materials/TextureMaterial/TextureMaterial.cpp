@@ -74,7 +74,6 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     glm::vec3 LumiereObjet = lumiere->frame()->convertPtTo(glm::vec3(0.0, 0.0, 0.0), o->frame());
     glProgramUniform3fv(vp->getId(), l_posLum, 1, glm::value_ptr(LumiereObjet));
 
-    
     Node *lumiere2 = Scene::getInstance()->getNode("Objet en rotation");
     glm::vec3 LumiereObjet2 = lumiere2->frame()->convertPtTo(glm::vec3(0.0, 0.0, 0.0), o->frame());
     glProgramUniform3fv(vp->getId(), l_posLum2, 1, glm::value_ptr(LumiereObjet2));

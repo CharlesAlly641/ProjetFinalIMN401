@@ -53,6 +53,7 @@ protected:
 
     // For TP 4
     FrameBufferObject *myFBO;
+    FrameBufferObject *bloomFBO;
     Display *display;
     Flou *flou;
     Bloom *bloom;

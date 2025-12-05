@@ -40,6 +40,7 @@ void BaseMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_View, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glProgramUniformMatrix4fv(vp->getId(), l_Model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
+    // Passage des paramètres pour la déformation de l'objet en mouvement au VS
     if (o->getName() == "Objet en mouvement") {
         glProgramUniform1f(vp->getId(), l_Time, scene->getTime());
         glProgramUniform1f(vp->getId(), l_Amplitude, 0.25f);

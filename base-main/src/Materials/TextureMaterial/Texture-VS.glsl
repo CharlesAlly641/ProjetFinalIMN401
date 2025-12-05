@@ -8,7 +8,6 @@ uniform vec3 posCam;
 uniform float Time;
 uniform vec3 posLum2;
 
-
 out vec3 vKa;
 out vec3 vKd;
 out vec3 LightDir;
@@ -29,12 +28,7 @@ layout(location = 3) in vec3 Texture;
 layout(location = 4) in vec4 Tangente;
 
 
-
-
-
 void main() {
-
-    
     // Calcul de la matrice TBN
     vec3 T = normalize(Tangente.rgb);
     vec3 N = normalize(Normal);;
@@ -46,7 +40,7 @@ void main() {
     vec3 L2 = posLum2 - Position;
     LightDir = TBN * L;
     LightDir2 = TBN * L2;
-    Norm = vec3(0.0, 0.0, 1.0);
+    Norm = normalize(Normal);
     vec3 V = posCam - Position;
     ViewDir = TBN * V;
 

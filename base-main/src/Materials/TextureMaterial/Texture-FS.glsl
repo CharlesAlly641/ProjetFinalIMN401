@@ -25,7 +25,7 @@ void main() {
     vec4 texNormalMap = texture(NormalMap, couleur);
     vec4 texMix = mix(texColor, texColor2, texColor2.a);
 
-    // Calcul des paramètres de Phong avec posLum1
+    // Calcul des paramètres de Phong avec posLum1 et posLum2
     vec3 L = normalize(LightDir);
     vec3 L2 = normalize(LightDir2);
     vec3 N = texNormalMap.rgb * 2.0 - 1.0; // N = (valeur réelle + 1) / 2

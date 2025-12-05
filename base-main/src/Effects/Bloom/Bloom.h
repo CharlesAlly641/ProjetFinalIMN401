@@ -23,6 +23,7 @@ protected:
     Flou *flou;
 
     GLuint l_TextureSrc;
+    GLuint l_TextureSrc2;
     GLuint l_TextureBloom;
     GLuint l_Seuil;
 };
