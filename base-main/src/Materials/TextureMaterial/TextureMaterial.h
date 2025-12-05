@@ -60,5 +60,6 @@ protected:
     GLuint l_Tex, l_Tex2, l_NormalMap;
     GLuint l_Time;
 
+
 };
 

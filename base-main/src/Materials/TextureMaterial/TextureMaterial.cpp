@@ -62,6 +62,7 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_View, 1, GL_FALSE, glm::value_ptr(View));
     glProgramUniformMatrix4fv(vp->getId(), l_Proj, 1, GL_FALSE, glm::value_ptr(Proj));
 
+   
     // On transmet les paramètres du modèle de Phong au VS
     glProgramUniform1f(fp->getId(), l_Ka, m_Ka);
     glProgramUniform1f(fp->getId(), l_Kd, m_Kd);
@@ -93,6 +94,8 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     if (m_NormalMap) {
         glProgramUniform1i(fp->getId(), l_NormalMap, 2);
     }
+
+
 
 }
 

@@ -46,4 +46,6 @@ void BaseMaterial::animate(Node *o, const float elapsedTime) {
         glProgramUniform1f(vp->getId(), l_Amplitude, 0.25f);
         glProgramUniform1f(vp->getId(), l_Frequence, 0.003f);
     } 
+
+    
 }

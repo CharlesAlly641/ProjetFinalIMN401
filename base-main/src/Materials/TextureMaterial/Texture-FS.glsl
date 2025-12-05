@@ -19,16 +19,16 @@ layout(location = 0) out vec4 Color;
 
 void main() {
 
-    // R�cup�ration des textures et mixage
+    // Recuperation des textures et mixage
     vec4 texColor = texture(Tex, couleur);
     vec4 texColor2 = texture(Tex2, couleur);
     vec4 texNormalMap = texture(NormalMap, couleur);
     vec4 texMix = mix(texColor, texColor2, texColor2.a);
 
-    // Calcul des param�tres de Phong avec posLum1 et posLum2
+    // Calcul des parametres de Phong avec posLum1 et posLum2
     vec3 L = normalize(LightDir);
     vec3 L2 = normalize(LightDir2);
-    vec3 N = normalize(texNormalMap.rgb * 2.0 - 1.0); // N = (valeur r�elle + 1) / 2
+    vec3 N = normalize(texNormalMap.rgb * 2.0 - 1.0); // N = (valeur réelle + 1) / 2
     vec3 V = normalize(ViewDir);
     vec3 R = reflect(-L, N);
     vec3 R2 = reflect(-L2, N);
@@ -38,7 +38,7 @@ void main() {
     float spec = Ks * pow(max(dot(R, V), 0.0), s);
     float spec2 = Ks * pow(max(dot(R2, V), 0.0), s);
     
-    // Combinaison texture + �clairage
+    // Calcul de l'éclairage
     vec3 couleurLum = vec3(0.7, 0.7, 0.7);
     vec3 Couleur = (ambiant*texMix.rgb) + ((diffus+diffus2)*texMix.rgb + (spec+spec2)) * couleurLum;
     
