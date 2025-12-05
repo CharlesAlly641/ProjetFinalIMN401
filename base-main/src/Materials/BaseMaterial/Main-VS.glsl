@@ -20,22 +20,26 @@ layout(location = 2) in vec3 Normal;
 void main()
 {
     vec3 displacedPos = Position;
+    float decalage = 0.0;
     pic = 0.0;
 
     // Déformation aux sommets qui ont des index "pairs" uniquement
-    if (gl_VertexID %  2 == 0)
-    {
-        float displacement = Amplitude * sin(Time * Frequence);
-        displacedPos = displacedPos + Normal * displacement;
+    if (Amplitude > 0.0) {
+        if (gl_VertexID %  2 == 0)
+        {
+            float displacement = Amplitude * sin(Time * Frequence);
+            displacedPos = displacedPos + Normal * displacement;
 
-        // On met pic à 1 si le sommet a subit la déformation
-        pic = 1.0;
+            // On met pic à 1 si le sommet a subit la déformation
+            pic = 1.0;
+        }
+
+        // Mouvement d'oscillation de l'Objet
+        float amplitude = 0.5;
+        float vitesse = 0.002;
+        decalage = amplitude * sin(Time * vitesse);
     }
-
-    // Mouvement d'oscillation de l'Objet
-    float amplitude = 0.5;
-    float vitesse = 0.002;
-    float decalage = amplitude * sin(Time * vitesse);
+    
 
     gl_Position = Proj * View * Model * vec4(displacedPos + decalage, 1.0);
 }
