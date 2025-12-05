@@ -103,7 +103,7 @@ bool EngineGL::init() {
     TextureMaterial *matStump = new TextureMaterial("matStump");
     matStump->setDiffuseTexture(textureStump, nullptr);
     matStump->setNormalMap(textureStumpN);
-    matStump->setPhong(1, 0.5, 0.2, 32.0);
+    matStump->setPhong(1, 0.5, 0.1, 32.0);
     stump->frame()->scale(glm::vec3(0.25));                  
     stump->frame()->translate(glm::vec3(8.0, -0.10, 5.5));
     stump->setMaterial(matStump);

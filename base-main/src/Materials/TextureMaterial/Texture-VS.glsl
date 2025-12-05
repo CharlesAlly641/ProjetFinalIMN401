@@ -35,7 +35,7 @@ void main() {
     vec3 B = normalize(cross(N, T));
     mat3 TBN = mat3(T, B, N);
 
-    // Calcul des paramètres de Phong transmis au FS
+    // Calcul des param?tres de Phong transmis au FS
     vec3 L = posLum - Position;
     vec3 L2 = posLum2 - Position;
     LightDir = TBN * L;
