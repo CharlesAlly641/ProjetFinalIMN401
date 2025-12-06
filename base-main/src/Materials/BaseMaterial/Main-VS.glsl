@@ -13,7 +13,7 @@ out gl_PerVertex {
     vec4 gl_Position;
 };
 
-flat out float pic;
+out float pic;
 
 layout(location = 0) in vec3 Position;
 layout(location = 2) in vec3 Normal;

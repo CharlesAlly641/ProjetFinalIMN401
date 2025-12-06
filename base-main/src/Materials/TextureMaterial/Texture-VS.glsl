@@ -8,7 +8,6 @@ uniform vec3 posCam;
 uniform vec3 posLum2;
 
 out vec3 LightDir;
-out vec3 Norm;
 out vec3 ViewDir;
 out vec2 couleur;
 out vec3 LightDir2;
@@ -37,7 +36,6 @@ void main() {
     vec3 L2 = posLum2 - Position;
     LightDir = TBN * L;
     LightDir2 = TBN * L2;
-    Norm = vec3(0.0, 0.0, 1.0);
     vec3 V = posCam - Position;
     ViewDir = TBN * V;
 

@@ -81,7 +81,7 @@ message("Getting all sources... DONE")
 # ============================================================================
 # Executable
 # ============================================================================
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${SHADERS_FILES} "src/Materials/RotationMaterial/RotationMaterial.cpp" "src/Materials/RotationMaterial/RotationMaterial.h" "src/Materials/PhongMaterial/PhongMaterial.h" "src/Materials/PhongMaterial/PhongMaterial.cpp" "src/Effects/Flou/Flou.cpp" "src/Effects/Flou/Flou.h" "src/Effects/Bloom/Bloom.h" "src/Effects/Bloom/Bloom.cpp" "src/Effects/FlouProfondeur/FlouProfondeur.cpp" "src/Effects/FlouProfondeur/FlouProfondeur.h")
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${SHADERS_FILES} "src/Materials/RotationMaterial/RotationMaterial.cpp" "src/Materials/RotationMaterial/RotationMaterial.h" "src/Effects/Flou/Flou.cpp" "src/Effects/Flou/Flou.h" "src/Effects/Bloom/Bloom.h" "src/Effects/Bloom/Bloom.cpp" "src/Effects/FlouProfondeur/FlouProfondeur.cpp" "src/Effects/FlouProfondeur/FlouProfondeur.h")
 target_include_directories(${PROJECT_NAME} PRIVATE 
     ${SOURCE_DIR} 
     ${LIBS_DIR}/glad/include 

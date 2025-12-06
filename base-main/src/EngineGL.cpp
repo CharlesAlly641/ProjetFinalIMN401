@@ -239,14 +239,16 @@ bool EngineGL::init() {
     TextureMaterial *solMat2 = new TextureMaterial("solMat2");
     sol2->setMaterial(solMat2);
     sol2->frame()->translate(glm::vec3(0.0, 0.5, 0.0));
-    sol2->frame()->scale(glm::vec3(0.3, 0.3, 0.3));
+    sol2->frame()->scale(glm::vec3(0.5, 0.5, 0.5));
     solMat2->setPhong(1, 0.5, 0.1, 32.0);
 
     // Création de la texture du sol
     Texture2D *textureSol = new Texture2D(ObjPath + "Textures/Ground/Ground013_4K-JPG_Color.jpg");
     Texture2D *textureSolN = new Texture2D(ObjPath + "Textures/Ground/Ground013_4K-JPG_NormalDX.jpg");
-    solMat->setDiffuseTexture(textureSol, nullptr);
-    solMat->setNormalMap(textureSolN);
+    Texture2D *textureSolRoche = new Texture2D(ObjPath + "Textures/Rocks/Rocks007_4K-JPG_Color.jpg");
+    Texture2D *textureSolRocheN = new Texture2D(ObjPath + "Textures/Rocks/Rocks007_4K-JPG_NormalDX.jpg");
+    solMat->setDiffuseTexture(textureSolRoche, nullptr);
+    solMat->setNormalMap(textureSolRocheN);
     solMat2->setDiffuseTexture(textureSol, nullptr);
     solMat2->setNormalMap(textureSolN);
 

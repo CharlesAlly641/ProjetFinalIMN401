@@ -10,7 +10,6 @@ uniform sampler2D NormalMap;
 
 in vec3 LightDir2;
 in vec3 LightDir;
-in vec3 Norm;
 in vec3 ViewDir;
 in vec2 couleur;
 

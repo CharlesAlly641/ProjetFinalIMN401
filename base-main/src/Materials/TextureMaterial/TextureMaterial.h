@@ -27,7 +27,14 @@ public:
         }
     }
 
-    virtual void setNormalMap(Texture2D *tex) { m_NormalMap = tex;  }
+    virtual void setNormalMap(Texture2D *tex) { 
+        if (tex) {
+            m_NormalMap = tex;
+        }
+    }
+
+
+
 
     void TextureMaterial::setPhong(const float &Kd, const float &Ks, const float &Ka, float shininess) {
         m_Kd = Kd;
