@@ -1,12 +1,13 @@
-#version 460
+ï»¿#version 460
 flat in float pic;
+uniform vec3 Couleur;
 layout(location = 0) out vec4 Color;
 
 void main() {
-    // On ajuste la couleur selon si c'est un pic ou non pour mettre la déformation en évidence
-    if (pic == 1.0) {
-        Color = vec4(0.2, 0.2, 0.2, 1.0);
+    // On ajuste la couleur selon si c'est un pic ou non pour mettre la dï¿½formation en ï¿½vidence
+    if (pic > 0.9) {
+        Color = vec4(0.0, 0.0, 0.0, 1.0);
     } else {
-        Color = vec4(0.9, 0.9, 0.9, 1.0);
+        Color = vec4(Couleur, 1.0);
     }
 }

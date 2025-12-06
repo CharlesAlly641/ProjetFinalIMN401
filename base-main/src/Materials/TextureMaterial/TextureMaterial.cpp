@@ -26,7 +26,6 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     l_Tex = glGetUniformLocation(fp->getId(), "Tex");
     l_Tex2 = glGetUniformLocation(fp->getId(), "Tex2");
     l_NormalMap = glGetUniformLocation(fp->getId(), "NormalMap");
-    l_Time = glGetUniformLocation(vp->getId(), "Time");
 }
 
 TextureMaterial::~TextureMaterial() {}
@@ -35,7 +34,7 @@ void TextureMaterial::render(Node *o) {
 
     m_ProgramPipeline->bind();
 
-    // Liaison des textures au canaux
+    // Liaison des textures aux canaux
     if (m_Texture) { glBindTextureUnit(0, m_Texture->getId()); }
     if (m_Texture2) { glBindTextureUnit(1, m_Texture2->getId()); }
     if (m_NormalMap) { glBindTextureUnit(2, m_NormalMap->getId()); }
@@ -61,14 +60,12 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_Model, 1, GL_FALSE, glm::value_ptr(Model));
     glProgramUniformMatrix4fv(vp->getId(), l_View, 1, GL_FALSE, glm::value_ptr(View));
     glProgramUniformMatrix4fv(vp->getId(), l_Proj, 1, GL_FALSE, glm::value_ptr(Proj));
-
    
     // On transmet les paramètres du modèle de Phong au VS
     glProgramUniform1f(fp->getId(), l_Ka, m_Ka);
     glProgramUniform1f(fp->getId(), l_Kd, m_Kd);
     glProgramUniform1f(fp->getId(), l_Ks, m_Ks);
     glProgramUniform1f(fp->getId(), l_s, m_Shininess);
-
 
     // Conversion de la lumière du repère scène vers le repère objet
     Node *lumiere = Scene::getInstance()->getNode("L");
@@ -94,9 +91,6 @@ void TextureMaterial::animate(Node *o, const float elapsedTime) {
     if (m_NormalMap) {
         glProgramUniform1i(fp->getId(), l_NormalMap, 2);
     }
-
-
-
 }
 
 

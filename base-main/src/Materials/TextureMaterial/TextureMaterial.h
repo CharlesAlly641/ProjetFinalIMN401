@@ -30,7 +30,6 @@ public:
     virtual void setNormalMap(Texture2D *tex) { m_NormalMap = tex;  }
 
     void TextureMaterial::setPhong(const float &Kd, const float &Ks, const float &Ka, float shininess) {
-        // Enregistre les paramètres localement pour la fonction animate()
         m_Kd = Kd;
         m_Ks = Ks;
         m_Ka = Ka;
@@ -58,7 +57,6 @@ protected:
     GLuint l_View, l_Proj, l_Model; 
     GLuint l_Ka, l_Kd, l_posLum, l_posCam, l_Ks, l_s, l_posLum2;
     GLuint l_Tex, l_Tex2, l_NormalMap;
-    GLuint l_Time;
 
 
 };

@@ -32,7 +32,7 @@ bool EngineGL::init() {
     // box
     Node *box = scene->getNode("Box");
     box->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Box.obj"));
-    box->frame()->translate(glm::vec3(0.0, 1.1, 0.0));
+    box->frame()->translate(glm::vec3(0.0, 0.6, 0.0));
     Texture2D *textureBox = new Texture2D(ObjPath + "Textures/Box_diff.jpg");
     Texture2D *textureBoxN = new Texture2D(ObjPath + "Textures/Box_nrm.jpg");
     TextureMaterial *matBox = new TextureMaterial("matBox");
@@ -52,7 +52,7 @@ bool EngineGL::init() {
     matPillar->setPhong(1, 0.5, 0.1, 20.0);
     pillar->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), M_PI/2);
     pillar->setMaterial(matPillar);
-    pillar->frame()->translate(glm::vec3(0.0, 1.1, 0.0));
+    pillar->frame()->translate(glm::vec3(0.0, 0.6, 0.0));
 
     // (0,0.775,0) is the center of the pillar
     
@@ -64,7 +64,7 @@ bool EngineGL::init() {
     Texture2D *textureBunnyN = new Texture2D(ObjPath + "Textures/Bunny_N.png");
     TextureMaterial* matBunny = new TextureMaterial("matBunny");
     bunny->frame()->scale(glm::vec3(2.0));
-    bunny->frame()->translate(glm::vec3(0.4, 0.03, 0.8));
+    bunny->frame()->translate(glm::vec3(0.0, 1.42, 0.3));
     matBunny->setDiffuseTexture(textureBunny, textureBunny2);
     matBunny->setNormalMap(textureBunnyN);
     matBunny->setPhong(1, 0.5, 0.1, 32.0);
@@ -79,22 +79,21 @@ bool EngineGL::init() {
     statue->frame()->scale(glm::vec3(0.013));
     statue->frame()->translate(glm::vec3(-1.5,35.0, 0.0));
     statue->frame()->rotate(glm::vec3(1.0, 0.0, 0.0), -M_PI / 2);
-
     matStatue->setDiffuseTexture(textureStatue, nullptr);
     matStatue->setNormalMap(textureStatueN);
     matStatue->setPhong(1, 0.5, 0.1, 32.0);
     statue->setMaterial(matStatue);
 
-    // Création de la roche 
+    // Création des rochers 
     Node *boulder = scene->getNode("Boulder");
     boulder->setModel(scene->m_Models.get<ModelGL>(ObjPath + "boulder_01_4k.obj"));
     Texture2D *textureBoulder = new Texture2D(ObjPath + "Textures/boulder_01_diff_4k.jpg");
-    Texture2D *textureBoulderN = new Texture2D(ObjPath + "Textures/boulder_01_nor_gl_4k.png"); // normal map en EXR
+    Texture2D *textureBoulderN = new Texture2D(ObjPath + "Textures/boulder_01_nor_gl_4k.png"); 
     TextureMaterial *matBoulder = new TextureMaterial("matBoulder");
     matBoulder->setDiffuseTexture(textureBoulder, nullptr);
     matBoulder->setNormalMap(textureBoulderN);
     matBoulder->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
-    boulder->frame()->translate(glm::vec3(-2.3f, 0.0f, 1.0f)); // position sur le sol
+    boulder->frame()->translate(glm::vec3(-2.3f, 0.0f, 1.0f)); 
     boulder->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), M_PI);
     boulder->frame()->scale(glm::vec3(1.5f));                 
     boulder->setMaterial(matBoulder);
@@ -105,7 +104,7 @@ bool EngineGL::init() {
     matBoulder2->setDiffuseTexture(textureBoulder, nullptr);
     matBoulder2->setNormalMap(textureBoulderN);
     matBoulder2->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
-    boulder2->frame()->translate(glm::vec3(-2.3f, 0.0f, -0.7f)); // position sur le sol
+    boulder2->frame()->translate(glm::vec3(-2.3f, 0.0f, -0.7f)); 
     boulder2->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), M_PI);
     boulder2->frame()->scale(glm::vec3(1.5f));
     boulder2->setMaterial(matBoulder2);
@@ -116,7 +115,7 @@ bool EngineGL::init() {
     matBoulder3->setDiffuseTexture(textureBoulder, nullptr);
     matBoulder3->setNormalMap(textureBoulderN);
     matBoulder3->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
-    boulder3->frame()->translate(glm::vec3(2.0f, 0.0f, 1.0f)); // position sur le sol
+    boulder3->frame()->translate(glm::vec3(2.0f, 0.0f, 1.0f)); 
     boulder3->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), M_PI);
     boulder3->frame()->scale(glm::vec3(1.5f));
     boulder3->setMaterial(matBoulder3);
@@ -127,7 +126,7 @@ bool EngineGL::init() {
     matBoulder4->setDiffuseTexture(textureBoulder, nullptr);
     matBoulder4->setNormalMap(textureBoulderN);
     matBoulder4->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
-    boulder4->frame()->translate(glm::vec3(2.0f, 0.0f, -0.7f)); // position sur le sol
+    boulder4->frame()->translate(glm::vec3(2.0f, 0.0f, -0.7f)); 
     boulder4->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), M_PI);
     boulder4->frame()->scale(glm::vec3(1.5f));
     boulder4->setMaterial(matBoulder4);
@@ -139,7 +138,7 @@ bool EngineGL::init() {
     matBoulder5->setNormalMap(textureBoulderN);
     matBoulder5->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
     boulder5->frame()->translate(glm::vec3(-1.5f, 0.0f, -2.4f));
-    boulder5->frame()->rotate(glm::vec3(0, 1, 0), M_PI);      // oriente vers la caméra
+    boulder5->frame()->rotate(glm::vec3(0, 1, 0), M_PI);
     boulder5->frame()->scale(glm::vec3(1.5f));
     boulder5->setMaterial(matBoulder5);
 
@@ -149,7 +148,7 @@ bool EngineGL::init() {
     matBoulder6->setDiffuseTexture(textureBoulder, nullptr);
     matBoulder6->setNormalMap(textureBoulderN);
     matBoulder6->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
-    boulder6->frame()->translate(glm::vec3(0.0f, 0.0f, -2.4f)); // position sur le sol
+    boulder6->frame()->translate(glm::vec3(0.0f, 0.0f, -2.4f)); 
     boulder6->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), M_PI);
     boulder6->frame()->scale(glm::vec3(1.5f));
     boulder6->setMaterial(matBoulder6);
@@ -160,7 +159,7 @@ bool EngineGL::init() {
     matBoulder7->setDiffuseTexture(textureBoulder, nullptr);
     matBoulder7->setNormalMap(textureBoulderN);
     matBoulder7->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
-    boulder7->frame()->translate(glm::vec3(1.5f, 0.0f, -2.4f)); // position sur le sol
+    boulder7->frame()->translate(glm::vec3(1.5f, 0.0f, -2.4f));
     boulder7->frame()->rotate(glm::vec3(0.0, 1.0, 0.0), M_PI);
     boulder7->frame()->scale(glm::vec3(1.5f));
     boulder7->setMaterial(matBoulder7);
@@ -172,7 +171,7 @@ bool EngineGL::init() {
     matBoulder8->setNormalMap(textureBoulderN);
     matBoulder8->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
     boulder8->frame()->translate(glm::vec3(-1.5f, 0.0f, 2.4f));
-    boulder8->frame()->rotate(glm::vec3(0, 1, 0), M_PI); // oriente vers la caméra
+    boulder8->frame()->rotate(glm::vec3(0, 1, 0), M_PI); 
     boulder8->frame()->scale(glm::vec3(1.5f));
     boulder8->setMaterial(matBoulder8);
 
@@ -183,7 +182,7 @@ bool EngineGL::init() {
     matBoulder9->setNormalMap(textureBoulderN);
     matBoulder9->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
     boulder9->frame()->translate(glm::vec3(0.0f, 0.0f, 2.4f));
-    boulder9->frame()->rotate(glm::vec3(0, 1, 0), M_PI); // oriente vers la caméra
+    boulder9->frame()->rotate(glm::vec3(0, 1, 0), M_PI);
     boulder9->frame()->scale(glm::vec3(1.5f));
     boulder9->setMaterial(matBoulder9);
 
@@ -194,7 +193,7 @@ bool EngineGL::init() {
     matBoulder10->setNormalMap(textureBoulderN);
     matBoulder10->setPhong(1.0f, 0.6f, 0.1f, 32.0f);
     boulder10->frame()->translate(glm::vec3(1.5f, 0.0f, 2.4f));
-    boulder10->frame()->rotate(glm::vec3(0, 1, 0), M_PI); // oriente vers la caméra
+    boulder10->frame()->rotate(glm::vec3(0, 1, 0), M_PI); 
     boulder10->frame()->scale(glm::vec3(1.5f));
     boulder10->setMaterial(matBoulder10);
 
@@ -207,11 +206,11 @@ bool EngineGL::init() {
     matStump->setDiffuseTexture(textureStump, nullptr);
     matStump->setNormalMap(textureStumpN);
     matStump->setPhong(1, 0.5, 0.1, 32.0);
-    stump->frame()->scale(glm::vec3(0.25));                  
-    stump->frame()->translate(glm::vec3(6.0, -0.10, 5.5));
+    stump->frame()->scale(glm::vec3(0.5));                  
+    stump->frame()->translate(glm::vec3(6.0, -0.1, 6.0));
     stump->setMaterial(matStump);
 
-    // Création d'un noeud 
+    // Création d'un noeud (pour l'objet en mouvement)
     Node *noeud = scene->getNode("Noeud");
     pillar->adopt(noeud);
     noeud->setMaterial(new RotationMaterial("rotMat"));
@@ -225,20 +224,21 @@ bool EngineGL::init() {
     noeud->adopt(rotObjet);
     rotObjet->frame()->translate(glm::vec3(0.0, 1.1, 0.0));
 
-    // Création d'un objet sol
+    // Création du terrain principal
     Node *sol = scene->getNode("Sol");
     sol->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Wall.obj"));
     TextureMaterial* solMat = new TextureMaterial("solMat");
     sol->setMaterial(solMat);
     sol->frame()->translate(glm::vec3(0.0, -0.1, 0.0));
-    sol->frame()->scale(glm::vec3(0.9, 0.9, 0.9));
+    sol->frame()->scale(glm::vec3(1.0, 1.0, 1.0));
     solMat->setPhong(1, 0.5, 0.1, 32.0);
 
+    // Création du terrain surélevé
     Node *sol2 = scene->getNode("Sol2");
     sol2->setModel(scene->m_Models.get<ModelGL>(ObjPath + "Wall.obj"));
     TextureMaterial *solMat2 = new TextureMaterial("solMat2");
     sol2->setMaterial(solMat2);
-    sol2->frame()->translate(glm::vec3(0.0, 1.0, 0.0));
+    sol2->frame()->translate(glm::vec3(0.0, 0.5, 0.0));
     sol2->frame()->scale(glm::vec3(0.3, 0.3, 0.3));
     solMat2->setPhong(1, 0.5, 0.1, 32.0);
 
@@ -255,8 +255,8 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(L);
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
-    scene->getSceneNode()->adopt(sol);
     pillar->adopt(statue);
+    scene->getSceneNode()->adopt(sol);
     scene->getSceneNode()->adopt(boulder);
     scene->getSceneNode()->adopt(boulder2);
     scene->getSceneNode()->adopt(boulder3);
@@ -270,7 +270,6 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(stump);
     scene->getSceneNode()->adopt(sol);
     scene->getSceneNode()->adopt(sol2);
-
 
     // Création des FBOs
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);
@@ -294,6 +293,7 @@ void EngineGL::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     for (unsigned int i = 0; i < allNodes->nodes.size(); i++)
         allNodes->nodes[i]->render();
+    // Application des effets de bloom et du flou de profondeur
     myFBO->disable();
     bloom->apply(myFBO, bloomFBO);
     flouProfondeur->apply(bloomFBO, NULL);

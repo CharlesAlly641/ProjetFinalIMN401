@@ -8,6 +8,7 @@ uniform float Time;
 uniform float Amplitude; 
 uniform float Frequence;
 
+
 out gl_PerVertex {
     vec4 gl_Position;
 };
@@ -23,14 +24,16 @@ void main()
     float decalage = 0.0;
     pic = 0.0;
 
-    // Déformation aux sommets qui ont des index "pairs" uniquement
+    // Déformation si c'est le bon objet
     if (Amplitude > 0.0) {
+        // Déformation aux sommets avec des index pairs uniquement
         if (gl_VertexID %  2 == 0)
         {
             float displacement = Amplitude * sin(Time * Frequence);
             displacedPos = displacedPos + Normal * displacement;
 
-            // On met pic à 1 si le sommet a subit la déformation
+            // On met pic à 1 si le sommet a subit la déformation 
+            // Pour obtenir une couleur différente dans le FS
             pic = 1.0;
         }
 

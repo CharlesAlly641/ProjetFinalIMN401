@@ -17,6 +17,7 @@ BaseMaterial::BaseMaterial(std::string name) : MaterialGL(name) {
     l_Time = glGetUniformLocation(vp->getId(), "Time");
     l_Amplitude = glGetUniformLocation(vp->getId(), "Amplitude");
     l_Frequence = glGetUniformLocation(vp->getId(), "Frequence");
+    l_Couleur = glGetUniformLocation(fp->getId(), "Couleur");
 }
 
 BaseMaterial::~BaseMaterial() {}
@@ -40,12 +41,17 @@ void BaseMaterial::animate(Node *o, const float elapsedTime) {
     glProgramUniformMatrix4fv(vp->getId(), l_View, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glProgramUniformMatrix4fv(vp->getId(), l_Model, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
-    // Passage des paramètres pour la déformation de l'objet en mouvement au VS
+    // Passage des paramètres pour la déformation de l'objet en mouvement uniquement au VS
     if (o->getName() == "Objet en mouvement") {
         glProgramUniform1f(vp->getId(), l_Time, scene->getTime());
         glProgramUniform1f(vp->getId(), l_Amplitude, 0.25f);
         glProgramUniform1f(vp->getId(), l_Frequence, 0.003f);
-    } 
+        glProgramUniform3f(fp->getId(), l_Couleur, 0.7, 0.2, 0.2);
+    }
+    if (o->getName() == "L") {
+        glProgramUniform1f(vp->getId(), l_Amplitude, 0.0f);
+        glProgramUniform3f(fp->getId(), l_Couleur, 1.0, 1.0, 1.0);
+    }
 
     
 }

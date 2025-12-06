@@ -22,7 +22,8 @@ protected:
     GLProgram *fp;
 
     GLuint l_View, l_Proj, l_Model; // location of uniforms
-    GLuint l_Time, l_Amplitude, l_Frequence;
+    GLuint l_Time, l_Amplitude, l_Frequence; // Paramètres pour la déformation
+    GLuint l_Couleur;
 
 };
 

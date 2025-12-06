@@ -19,9 +19,6 @@ Flou::~Flou() {
 
 void Flou::apply(FrameBufferObject *src, FrameBufferObject *target) {
 
-    // note the most efficient but here for usability purposes (could be set up in the constructor if src is constant)
-    // glProgramUniformHandleui64ARB(fp->getId(), l_Texture, src->getColorTexture()->getHandle());
-    // 
     // PASSE 1 : Flou Horizontal
     // 1. Définir la texture source comme src
     glActiveTexture(GL_TEXTURE0);

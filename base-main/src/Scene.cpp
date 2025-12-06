@@ -133,6 +133,7 @@ void Scene::displayInterface() {
     ImGui::End();
 }
 
+// Retourne le temps (pour la déformation)
 float Scene::getTime() {
     clock_t now = clock();
     return (float)(now - m_Start) * 1000.0f / CLOCKS_PER_SEC;

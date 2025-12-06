@@ -40,7 +40,8 @@ void main() {
     
     // Calcul de l'éclairage
     vec3 couleurLum = vec3(0.7, 0.7, 0.7);
-    vec3 Couleur = (ambiant*texMix.rgb) + ((diffus+diffus2)*texMix.rgb + (spec+spec2)) * couleurLum;
+    vec3 couleurLum2 = vec3(0.7, 0.2, 0.2);
+    vec3 Couleur = (ambiant*texMix.rgb) + (diffus*texMix.rgb + spec) * couleurLum + (diffus2*texMix.rgb + spec2) * couleurLum2;
     
     // R�sultat final
     Color = vec4(Couleur, 1.0);

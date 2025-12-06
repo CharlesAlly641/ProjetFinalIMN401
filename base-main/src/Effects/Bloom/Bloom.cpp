@@ -74,8 +74,6 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
     // Définir la cible comme target si non nul
     if (target)
         target->enable();
-    else
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     // Nettoyer les tampons
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -106,8 +104,6 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
 
     if (target)
         target->disable();
-    else
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     
 }
 

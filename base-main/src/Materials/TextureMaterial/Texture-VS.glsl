@@ -5,11 +5,8 @@ uniform mat4 View;
 uniform mat4 Proj;
 uniform vec3 posLum;
 uniform vec3 posCam;
-uniform float Time;
 uniform vec3 posLum2;
 
-out vec3 vKa;
-out vec3 vKd;
 out vec3 LightDir;
 out vec3 Norm;
 out vec3 ViewDir;
@@ -33,14 +30,14 @@ void main() {
     vec3 T = normalize(Tangente.rgb);
     vec3 N = normalize(Normal);;
     vec3 B = normalize(cross(N, T));
-    mat3 TBN = mat3(T, B, N);
+    mat3 TBN = transpose(mat3(T, B, N));
 
     // Calcul des parametres de Phong transmis au FS
     vec3 L = posLum - Position;
     vec3 L2 = posLum2 - Position;
     LightDir = TBN * L;
     LightDir2 = TBN * L2;
-    Norm = normalize(Normal);
+    Norm = vec3(0.0, 0.0, 1.0);
     vec3 V = posCam - Position;
     ViewDir = TBN * V;
 
