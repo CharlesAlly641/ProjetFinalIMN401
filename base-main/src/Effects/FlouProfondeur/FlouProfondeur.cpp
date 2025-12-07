@@ -62,7 +62,7 @@ void FlouProfondeur::apply(FrameBufferObject *src, FrameBufferObject *target) {
     // Désactiver le pipeline et les textures
     m_ProgramPipeline->release();
 
-    // Désactiver les textures
+    // Désactiver les textures et FBO
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, 0);
     glActiveTexture(GL_TEXTURE0);

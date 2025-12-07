@@ -34,11 +34,11 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
      // 2. Définir la cible comme FBO1
      FBO1->enable();
 
-     // Nettoyer les tampons
+     // 3. Nettoyer les tampons
      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
      glDisable(GL_DEPTH_TEST);
 
-     // Activer le fragment shader fpExtract
+     // 4. Activer le fragment shader fpExtract
      m_ProgramPipeline->useProgramStage(vp, GL_VERTEX_SHADER_BIT);
      m_ProgramPipeline->useProgramStage(fpExtract, GL_FRAGMENT_SHADER_BIT);
      m_ProgramPipeline->link();
@@ -46,13 +46,13 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
      glProgramUniform1i(fpExtract->getId(), l_TextureSrc, 0);
      glProgramUniform1f(fpExtract->getId(), l_Seuil, 0.75f);
 
-     // Activer le pipeline
+     // 5. Activer le pipeline
      m_ProgramPipeline->bind();
 
-     // Afficher le quad
+     // 6. Afficher le quad
      drawQuad();
 
-     // Désactiver le pipeline
+     // 7. Désactiver le pipeline
      m_ProgramPipeline->release();
 
      glActiveTexture(GL_TEXTURE0);
@@ -64,22 +64,22 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
     flou->apply(FBO1, FBO2);
 
     // PASSE 3 : Combiner les fragments
-    // Activer les deux textures
+    // 1. Activer les deux textures
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, src->getColorTexture()->getId());
 
     glActiveTexture(GL_TEXTURE1);
     glBindTexture(GL_TEXTURE_2D, FBO2->getColorTexture()->getId());
 
-    // Définir la cible comme target si non nul
+    // 2. Définir la cible comme target si non nul
     if (target)
         target->enable();
 
-    // Nettoyer les tampons
+    // 3. Nettoyer les tampons
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
 
-    // Activer le fragment shader fpCombine
+    // 4. Activer le fragment shader fpCombine
     m_ProgramPipeline->useProgramStage(vp, GL_VERTEX_SHADER_BIT);
     m_ProgramPipeline->useProgramStage(fpCombine, GL_FRAGMENT_SHADER_BIT);
     m_ProgramPipeline->link();
@@ -87,13 +87,13 @@ void Bloom::apply(FrameBufferObject *src, FrameBufferObject *target) {
     glProgramUniform1i(fpCombine->getId(), l_TextureSrc, 0); 
     glProgramUniform1i(fpCombine->getId(), l_TextureBloom, 1); 
 
-    // Activer le pipeline
+    // 5. Activer le pipeline
     m_ProgramPipeline->bind();
 
-    // Afficher le quad
+    // 6. Afficher le quad
     drawQuad();
 
-    // Désactiver le pipeline, textures, target
+    // 7. Désactiver le pipeline, textures, target
     m_ProgramPipeline->release();
 
     glActiveTexture(GL_TEXTURE1);

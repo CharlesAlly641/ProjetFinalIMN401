@@ -35,6 +35,7 @@ void Flou::apply(FrameBufferObject *src, FrameBufferObject *target) {
     m_ProgramPipeline->useProgramStage(vp, GL_VERTEX_SHADER_BIT);
     m_ProgramPipeline->useProgramStage(fph, GL_FRAGMENT_SHADER_BIT);
     m_ProgramPipeline->link();
+    glProgramUniform1i(fph->getId(), l_TextureH, 0);
 
     // 5. Activer le pipeline
     m_ProgramPipeline->bind();
@@ -45,7 +46,10 @@ void Flou::apply(FrameBufferObject *src, FrameBufferObject *target) {
     // 7. Désactiver le pipeline
     m_ProgramPipeline->release();
 
-    // 8. Désactiver le FBO tmp
+    // 8. Désactiver le FBO tmp et les textures
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
     tmp->disable();
     
     // === PASSE 2: Flou Vertical ===
@@ -65,6 +69,7 @@ void Flou::apply(FrameBufferObject *src, FrameBufferObject *target) {
     m_ProgramPipeline->useProgramStage(vp, GL_VERTEX_SHADER_BIT);
     m_ProgramPipeline->useProgramStage(fpv, GL_FRAGMENT_SHADER_BIT);
     m_ProgramPipeline->link();
+    glProgramUniform1i(fpv->getId(), l_TextureV, 0);
 
     // 5. Activer le pipeline
     m_ProgramPipeline->bind();
@@ -75,7 +80,10 @@ void Flou::apply(FrameBufferObject *src, FrameBufferObject *target) {
     // 7. Désactiver le pipeline
     m_ProgramPipeline->release();
 
-    // 8. Désactiver le FBO target
+    // 8. Désactiver le FBO target et textures
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
     if (target)
         target->disable();
 }

@@ -11,8 +11,12 @@ TextureMaterial::TextureMaterial(std::string name) : MaterialGL(name) {
     m_ProgramPipeline->useProgramStage(vp, GL_VERTEX_SHADER_BIT);
     m_ProgramPipeline->useProgramStage(fp, GL_FRAGMENT_SHADER_BIT);
 
+    // Initialisation des textures à null;
     m_Texture = nullptr;
+    m_Texture2 = nullptr;
+    m_NormalMap = nullptr;
 
+    // Localisation des uniformes
     l_View = glGetUniformLocation(vp->getId(), "View");
     l_Proj = glGetUniformLocation(vp->getId(), "Proj");
     l_Model = glGetUniformLocation(vp->getId(), "Model");

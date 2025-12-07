@@ -257,7 +257,6 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(L);
     scene->getSceneNode()->adopt(box);
     scene->getSceneNode()->adopt(pillar);
-    pillar->adopt(statue);
     scene->getSceneNode()->adopt(sol);
     scene->getSceneNode()->adopt(boulder);
     scene->getSceneNode()->adopt(boulder2);
@@ -272,6 +271,7 @@ bool EngineGL::init() {
     scene->getSceneNode()->adopt(stump);
     scene->getSceneNode()->adopt(sol);
     scene->getSceneNode()->adopt(sol2);
+    pillar->adopt(statue);
 
     // Création des FBOs
     myFBO = new FrameBufferObject("myFBO", m_Width, m_Height);

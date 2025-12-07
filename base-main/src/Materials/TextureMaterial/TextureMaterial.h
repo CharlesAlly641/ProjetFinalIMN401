@@ -15,30 +15,18 @@ public:
 
     virtual void displayInterface() {};
 
-    virtual void setDiffuseTexture(Texture2D *tex, Texture2D *tex2 = nullptr) {
-        if (tex) {
-            m_Texture = tex;
-        }
-        if (tex2) {
-            m_Texture2 = tex2;
-        } 
-        else {
-            m_Texture2 = nullptr;
-        }
+    virtual void setDiffuseTexture(Texture2D *tex, Texture2D *tex2) {
+        m_Texture = tex;
+        m_Texture2 = tex2;
     }
 
     virtual void setNormalMap(Texture2D *tex) { 
-        if (tex) {
-            m_NormalMap = tex;
-        }
+        m_NormalMap = tex;
     }
 
-
-
-
-    void TextureMaterial::setPhong(const float &Kd, const float &Ks, const float &Ka, float shininess) {
-        m_Kd = Kd;
+    void TextureMaterial::setPhong(const float &Ks, const float &Kd, const float &Ka, float shininess) {
         m_Ks = Ks;
+        m_Kd = Kd;
         m_Ka = Ka;
         m_Shininess = shininess;
     }
@@ -57,6 +45,7 @@ protected:
     float m_Ks;
     float m_Shininess;
 
+    // Shaders
     GLProgram *vp;
     GLProgram *fp;
 
